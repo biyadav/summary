@@ -5,6 +5,16 @@ This design is one of the implementations of the Producer-Consumer pattern.
 The java.util.concurrent.Executors provide factory methods which are to be used to create ThreadPools of worker threads.
 It is the job of the Executor Framework to schedule and execute the submitted tasks and return the results from the thread pool.
 
-<h5>why do we need such thread pools when we can create objects of java.lang.Thread or implement Runnable/Callable interfaces to achieve parallelism?</h5>
+<h5>why do we need such thread pools when we can create objects of java.lang.Thread or implement Runnable/Callable interfaces to
+  achieve parallelism?</h5>
 
+1.)Creating a new thread for a new task leads to overhead of thread creation and tear-down. Managing this thread life-cycle significantly 
+    adds to the execution time.
+    
+2.)Adding a new thread for each process without any throttling leads to the creation of a large number of threads.
+These threads occupy memory and cause wastage ofresources. The CPU starts to spend too much time switching contexts when each thread is
+swapped out and another thread comes in for execution.
 
+Thread pools overcome this issue by keeping the threads alive and reusing the threads. Any excess tasks flowing in that the threads in the
+pool can handle are held in a Queue. Once any of the threads get free, they pick up the next task from this queue. This task queue is
+essentially unbounded for the out-of-box executors provided by the JDK.
