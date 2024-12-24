@@ -1,5 +1,54 @@
 java.util.concurrent package was added to Java 5.
 
+
+<h5>The Callable Interface</h5>
+Callable interface is an improved version of Runnable. It represents a task that returns a result and may throw an exception. 
+
+```
+public class DataReader implements Callable {
+    @Override
+    public String call() throws Exception {
+        System.out.println("Reading data...");
+        TimeUnit.SECONDS.sleep(5);
+        return "Data reading finished";
+    }
+}
+
+public static void main(String[] args) throws InterruptedException, ExecutionException {
+    ExecutorService executorService = Executors.newFixedThreadPool(2);
+
+    Future<String> dataReadFuture = executorService.submit(new DataReader());
+    Future<String> dataProcessFuture = executorService.submit(new DataProcessor());
+
+    while (!dataReadFuture.isDone() && !dataProcessFuture.isDone()) {
+            System.out.println("Reading and processing not yet finished.");
+            // Do some other things that don't depend on these two processes
+            // Simulating another task
+            TimeUnit.SECONDS.sleep(1);
+        }
+    System.out.println(dataReadFuture.get());
+    System.out.println(dataProcessFuture.get());
+}
+
+OR WITH TIMEOUT
+
+public static void main(String[] args) throws InterruptedException, ExecutionException {
+    ExecutorService executorService = Executors.newFixedThreadPool(2);
+
+    Future<String> dataReadFuture = executorService.submit(new DataReader());
+    Future<String> dataProcessFuture = executorService.submit(new DataProcessor());
+
+    System.out.println("Doing another task in anticipation of the results.");
+    // Simulating another task
+    TimeUnit.SECONDS.sleep(1);
+    System.out.println(dataReadFuture.get());
+    System.out.println(dataProcessFuture.get());
+}
+
+```
+If we submit more than these two tasks into this pool, the additional tasks will wait in the queue until a free spot emerges.
+
+
 <h4> Executor Framework </h4>
 
 Java provides its own multi-threading framework called the Executor Framework.
