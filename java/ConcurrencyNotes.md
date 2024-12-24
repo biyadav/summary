@@ -164,3 +164,30 @@ public interface Future<V> {
 }
 
 ```
+if you don't receive a result within n seconds, you might just decide to not use the result at all. 
+```
+boolean cancelled = false;
+if (dataReadFuture.isDone()) {
+    try {
+        dataReadResult = dataReadFuture.get();
+    } catch (ExecutionException e) {
+        e.printStackTrace();
+    }
+} else {
+cancelled = dataReadFuture.cancel(true);
+}
+if (!cancelled) {
+    System.out.println(dataReadResult);
+} else {
+    System.out.println("Task was cancelled.");
+}
+```
+
+The cancel() method accepts a boolean parameter. This boolean defines whether we allow the cancel() method to interrupt the task execution or not.
+And if we try getting the data from a canceled task, a CancellationException is generated:
+```
+if (dataReadFuture.cancel(true)) {
+    dataReadFuture.get();
+}
+```
+
