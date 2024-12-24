@@ -8,8 +8,8 @@ This design is one of the implementations of the Producer-Consumer pattern.
 The java.util.concurrent.Executors provide factory methods which are to be used to create ThreadPools of worker threads.
 It is the job of the Executor Framework to schedule and execute the submitted tasks and return the results from the thread pool.
 
-<h5>why do we need such thread pools when we can create objects of java.lang.Thread or implement Runnable/Callable interfaces to
-  achieve parallelism?</h5>
+<h5> why do we need such thread pools when we can create objects of java.lang.Thread or implement Runnable/Callable interfaces to
+  achieve parallelism? </h5>
 
 1.)Creating a new thread for a new task leads to overhead of thread creation and tear-down. Managing this thread life-cycle significantly 
     adds to the execution time.
@@ -22,19 +22,19 @@ Thread pools overcome this issue by keeping the threads alive and reusing the th
 pool can handle are held in a Queue. Once any of the threads get free, they pick up the next task from this queue. This task queue is
 essentially unbounded for the out-of-box executors provided by the JDK.
 
-<h5>SingleThreadExecutor</h5>
+<h5>  SingleThreadExecutor  </h5>
  Has only a single thread. It is used to execute tasks in a sequential manner. If the thread dies due to an exception while executing a task,
  a new thread is created to replace the old thread and the subsequent tasks are executed in the new one.
 
  ExecutorService executorService = Executors.newSingleThreadExecutor()
 
- <h5>FixedThreadPool(n)</h5>
+ <h5>   FixedThreadPool(n)   </h5>
 
 Is a thread pool of a fixed number of threads. The tasks submitted to the executor are executed by the n threads and if there are more tasks
 they are stored on a LinkedBlockingQueue
 ExecutorService executorService = Executors.newFixedThreadPool(4);
 
-<h5>CachedThreadPool</h5>
+<h5>  CachedThreadPool  </h5>
 
 This thread pool is mostly used where there are lots of short-lived parallel tasks to be executed. Unlike the fixed thread pool,
 the number of threads of this executor pool is not bounded. If all the threads are busy executing some tasks and a new task comes,
@@ -42,55 +42,19 @@ the pool will create and add a new thread to the executor. As soon as one of the
 of the new tasks. If a thread remains idle for sixty seconds, they are terminated and removed from cache.
 
 However, if not managed correctly, or the tasks are not short-lived, the thread pool will have lots of live threads.
-This may lead to resource thrashing and hence performance drop
+This may lead to resource thrashing and hence performance drop.
 
-ADVERTISEMENT
-
-Introduction
-With the increase in the number of the cores available in the processors nowadays, coupled with the ever increasing need to achieve more throughput, multi-threading APIs are getting quite popular. Java provides its own multi-threading framework called the Executor Framework.
-
-What is the Executor Framework?
-The Executor Framework contains a bunch of components that are used to efficiently manage worker threads. The Executor API de-couples the execution of task from the actual task to be executed via Executors. This design is one of the implementations of the Producer-Consumer pattern.
-
-The java.util.concurrent.Executors provide factory methods which are to be used to create ThreadPools of worker threads.
-
-To use the Executor Framework we need to create one such thread pool and submit the task to it for execution. It is the job of the Executor Framework to schedule and execute the submitted tasks and return the results from the thread pool.
-
-A basic question that comes to mind is why do we need such thread pools when we can create objects of java.lang.Thread or implement Runnable/Callable interfaces to achieve parallelism?
-
-The answer comes down to two basic facts:
-
-ADVERTISEMENT
-
-Creating a new thread for a new task leads to overhead of thread creation and tear-down. Managing this thread life-cycle significantly adds to the execution time.
-Adding a new thread for each process without any throttling leads to the creation of a large number of threads. These threads occupy memory and cause wastage of resources. The CPU starts to spend too much time switching contexts when each thread is swapped out and another thread comes in for execution.
-All these factors reduce the throughput of the system. Thread pools overcome this issue by keeping the threads alive and reusing the threads. Any excess tasks flowing in that the threads in the pool can handle are held in a Queue. Once any of the threads get free, they pick up the next task from this queue. This task queue is essentially unbounded for the out-of-box executors provided by the JDK.
-
-Types of Executors
-Now that we have a good idea of what an executor is, let's also take a look at the different kinds of executors.
-
-SingleThreadExecutor
-This thread pool executor has only a single thread. It is used to execute tasks in a sequential manner. If the thread dies due to an exception while executing a task, a new thread is created to replace the old thread and the subsequent tasks are executed in the new one.
-
-ExecutorService executorService = Executors.newSingleThreadExecutor()
-FixedThreadPool(n)
-As the name indicates, it is a thread pool of a fixed number of threads. The tasks submitted to the executor are executed by the n threads and if there are more tasks they are stored on a LinkedBlockingQueue. This number is usually the total number of the threads supported by the underlying processor.
-
-ExecutorService executorService = Executors.newFixedThreadPool(4);
-CachedThreadPool
-This thread pool is mostly used where there are lots of short-lived parallel tasks to be executed. Unlike the fixed thread pool, the number of threads of this executor pool is not bounded. If all the threads are busy executing some tasks and a new task comes, the pool will create and add a new thread to the executor. As soon as one of the threads becomes free, it will take up the execution of the new tasks. If a thread remains idle for sixty seconds, they are terminated and removed from cache.
-
-However, if not managed correctly, or the tasks are not short-lived, the thread pool will have lots of live threads. This may lead to resource thrashing and hence performance drop.
 
 ExecutorService executorService = Executors.newCachedThreadPool();
 
-<h5></h5>ScheduledExecutor</h5>
-when we have a task that needs to be run at regular intervals or if we wish to delay a certain task.
+<h5>  ScheduledExecutor  </h5>
+
+When we have a task that needs to be run at regular intervals or if we wish to delay a certain task.
 ScheduledExecutorService scheduledExecService = Executors.newScheduledThreadPool(1);
 scheduledExecService.scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit)
 scheduledExecService.scheduleWithFixedDelay(Runnable command, long initialDelay, long period, TimeUnit unit)
 
-<h5>The Future Object</h5>
+<h5>  The Future Object  </h5>
 
 The result of the task submitted for execution to an executor can be accessed using the java.util.concurrent.Future
 Future can be thought of as a promise made to the caller by the executor.
@@ -105,7 +69,6 @@ If there is an exception when executing the task, the call to get method will th
 if the submitted task implements java.util.concurrent.Callable it will return result. If the task implements the Runnable interface, the call to .get() will
 return null once the task is complete.
 Future.cancel(boolean mayInterruptIfRunning) can be used to cancel the execution of a submitted task. 
-
 
 ```
 public class Task implements Callable<String> {
