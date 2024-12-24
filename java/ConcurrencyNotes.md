@@ -120,4 +120,20 @@ public class Task implements Callable<String> {
     }
 }
 
+public class ExecutorExample {
+    public static void main(String[] args) {
+
+        Task task = new Task("World");
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
+        Future<String> result = executorService.submit(task);
+        try {
+            System.out.println(result.get());
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println("Error occurred while executing the submitted task");
+            e.printStackTrace();
+        }
+        executorService.shutdown();
+    }
+}
+
 ```
