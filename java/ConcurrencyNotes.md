@@ -1,3 +1,4 @@
+java.util.concurrent package was added to Java 5.
 
 <h4> Executor Framework </h4>
 
@@ -100,3 +101,7 @@ public class ExecutorExample {
 }
 
 ```
+we call the shutdown on the executorService object to terminate all the threads and return the resources back to the OS.
+The .shutdown() method waits for the completion of currently submitted tasks to the executor. However, if the requirement
+is to immediately shut down the executor without waitingthen we can use the .shutdownNow() method instead.
+Any tasks pending for execution will be returned back in a java.util.List object.
