@@ -154,3 +154,13 @@ we call the shutdown on the executorService object to terminate all the threads 
 The .shutdown() method waits for the completion of currently submitted tasks to the executor. However, if the requirement
 is to immediately shut down the executor without waitingthen we can use the .shutdownNow() method instead.
 Any tasks pending for execution will be returned back in a java.util.List object.
+```
+public interface Future<V> {
+    V get() throws InterruptedException, ExecutionException;
+    V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException;
+    boolean isCancelled();
+    boolean isDone();
+    boolean cancel(boolean mayInterruptIfRunning)
+}
+
+```
