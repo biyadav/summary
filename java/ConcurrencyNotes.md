@@ -49,11 +49,13 @@ import java.lang.Runnable;
 
 <h5>    Guidelines for Choosing  </h5>
 
-``` Use Runnable when:
+```
+Use Runnable when:
 
 The task is fire-and-forget.
 You don’t care about the result of the computation.
 The task doesn’t involve checked exceptions.
+
 Use Callable when:
 
 The task must return a result (e.g., fetching data or computing a value).
