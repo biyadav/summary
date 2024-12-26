@@ -32,11 +32,14 @@ public class SimpleThreadExample {
 
 <h5>    Runnable Interface  </h5>
 Runnable is a functional interface representing a task that does not return a result and cannot throw checked exceptions.
+
+
 ```
 When to Use:
 	• You need to execute a task without expecting any result.
 	• The task does not throw checked exceptions.
 	• You’re working with APIs like Thread or Executor that only require a Runnable.
+
 ```
 
 ```
