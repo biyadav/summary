@@ -43,7 +43,6 @@ import java.lang.Runnable;
    } 
 }
 ```
-<h5>    Key Differences Between Callable and Runnable   </h5>
 
 ![image](https://github.com/user-attachments/assets/30cfacf8-f18e-45ec-8e7e-098eb4dd0546)
 
