@@ -31,9 +31,14 @@ public class SimpleThreadExample {
 ```
 
 <h5>    Runnable Interface  </h5>
+Runnable is a functional interface representing a task that does not return a result and cannot throw checked exceptions.
+```
+When to Use:
+	• You need to execute a task without expecting any result.
+	• The task does not throw checked exceptions.
+	• You’re working with APIs like Thread or Executor that only require a Runnable.
+```
 
-Description:  A functional interface representing a task that can be executed by a thread.
-Method: public abstract void run() : Contains the task logic.
 ```
 import java.lang.Runnable;
 
@@ -42,6 +47,20 @@ import java.lang.Runnable;
         Runnable task = () -> System.out.println("Runnable task running"); Thread thread = new Thread(task); thread.start();
    } 
 }
+
+Using Runnable with ExecutorService
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+public class RunnableWithExecutorExample {
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Runnable task = () -> System.out.println("Task executed via ExecutorService");
+        executor.execute(task);
+        executor.shutdown();
+    }
+}
+
 ```
 
 ![image](https://github.com/user-attachments/assets/30cfacf8-f18e-45ec-8e7e-098eb4dd0546)
