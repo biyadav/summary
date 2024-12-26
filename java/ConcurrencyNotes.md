@@ -90,8 +90,10 @@ java.util.concurrent package was added to Java 5.
 
 
 <h5>The Callable Interface</h5>
+
 Callable interface is an improved version of Runnable. Callable is a functional interface introduced in Java 5
 that represents a task capable of returning a result and throwing checked exceptions.
+
 ```
 When to Use:
 	• You need a task to return a result.
@@ -108,7 +110,9 @@ public class DataReader implements Callable {
         return "Data reading finished";
     }
 }
+```
 
+```
 public static void main(String[] args) throws InterruptedException, ExecutionException {
     ExecutorService executorService = Executors.newFixedThreadPool(2);
 
