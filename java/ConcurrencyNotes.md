@@ -1,7 +1,8 @@
 
 <h5>  Why Multithreading? </h5>
 
-There are several reasons as to why one would use multithreading in an application. Some of the most common reasons for multithreading are:
+There are several reasons as to why one would use multithreading in an application.
+Some of the most common reasons for multithreading are:
 	• Better utilization of a single CPU.
 	• Better utilization of multiple CPUs or CPU cores.
 	• Better user experience with regards to responsiveness.
@@ -28,8 +29,23 @@ public class SimpleThreadExample {
     }
 }
 ```
-![image](https://github.com/user-attachments/assets/8362744d-24ae-464c-bda3-eeafc47761c4)
 
+<h5>    Runnable Interface  </h5>
+
+Description:  A functional interface representing a task that can be executed by a thread.
+Method: public abstract void run() : Contains the task logic.
+```
+import java.lang.Runnable;
+
+ public class RunnableExample {
+  public static void main(String[] args) { 
+        Runnable task = () -> System.out.println("Runnable task running"); Thread thread = new Thread(task); thread.start();
+   } 
+}
+```
+<h5>    Key Differences Between Callable and Runnable   </h5>
+
+![image](https://github.com/user-attachments/assets/30cfacf8-f18e-45ec-8e7e-098eb4dd0546)
 
 
 java.util.concurrent package was added to Java 5.
