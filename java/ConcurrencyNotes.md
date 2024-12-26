@@ -147,6 +147,32 @@ public static void main(String[] args) throws InterruptedException, ExecutionExc
 ```
 If we submit more than these two tasks into this pool, the additional tasks will wait in the queue until a free spot emerges.
 
+ <h5>Combining Callable and Runnable </h5>
+ 
+ You can combine Callable and Runnable using Executors.callable(Runnable task, T result) 
+ if you need a Callable wrapper for a Runnable task.
+ 
+ ```
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+public class CallableFromRunnableExample {
+    public static void main(String[] args) throws Exception {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+Runnable runnableTask = () -> System.out.println("Runnable task executed");
+        Callable<String> callableTask = Executors.callable(runnableTask, "Success");
+Future<String> future = executor.submit(callableTask);
+        System.out.println("Result: " + future.get());
+executor.shutdown();
+    }
+}
+Summary
+  • Use Runnable for simple tasks that don’t require results or checked exception handling.
+  • Use Callable for tasks where you need to compute and retrieve a result or handle exceptions.
+
+```
+
 
 <h4> Executor Framework </h4>
 
