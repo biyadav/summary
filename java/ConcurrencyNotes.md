@@ -47,6 +47,21 @@ import java.lang.Runnable;
 ![image](https://github.com/user-attachments/assets/30cfacf8-f18e-45ec-8e7e-098eb4dd0546)
 
 
+<h5>    Guidelines for Choosing  </h5>
+
+``` Use Runnable when:
+
+The task is fire-and-forget.
+You don’t care about the result of the computation.
+The task doesn’t involve checked exceptions.
+Use Callable when:
+
+The task must return a result (e.g., fetching data or computing a value).
+The task may throw checked exceptions.
+You’re working with concurrency utilities like Future.
+
+```
+
 java.util.concurrent package was added to Java 5.
 
 
