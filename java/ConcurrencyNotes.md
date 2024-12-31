@@ -2,10 +2,10 @@
 <h5>  Why Multithreading? </h5>
 
  Common reasons for using multithreading :
-	a) Better utilization of a single CPU.
-	b) Better utilization of multiple CPUs or CPU cores.
-	c) Better user experience with regards to responsiveness.
-	d) Better user experience with regards to fairness.
+  a. Better utilization of a single CPU.
+  b. Better utilization of multiple CPUs or CPU cores.
+  c. Better user experience with regards to responsiveness.
+  d. Better user experience with regards to fairness.
  New functional programming parallelism has been introduced with the Fork and Join framework in Java 7,
  and the collection streams API in java 8 .
 
