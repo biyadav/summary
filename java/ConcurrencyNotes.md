@@ -10,7 +10,7 @@ Some of the most common reasons for multithreading are:
 New functional programming parallelism has been introduced with the Fork and Join framework in Java 7, and the collection streams API in 
 
 
-<h5>  Thread Class: </h5>
+<h5>  java.lang.Thread Class: Thread implements Runnable  </h5>
 
 Provides a way to create and manage threads.
 Key Methods:
@@ -29,6 +29,52 @@ public class SimpleThreadExample {
     }
 }
 ```
+
+<h5> Thread methods </h5>
+
+1. public synchronized void start : Begins the execution of the thread. The Java Virtual Machine (JVM) calls the run() method of the 
+   thread.
+2. public void run(): The entry point for the thread. When the thread is started, the run() method is invoked. If the thread was created 
+   using a class that implements Runnable, the run() method will execute the run() method of that Runnable object.
+3. public static native void sleep(long millis): Causes the currently executing thread to sleep (temporarily cease execution) for the 
+   specified number of milliseconds.
+4. public final void join( ): Waits for this thread to die. When one thread calls the join() method of another thread, it pauses the 
+   execution of the current thread until the thread being joined has completed its execution. public final synchronized void join(final 
+   long millis)
+5. public final void setPriority(int newPriority): Changes the priority of the thread. The priority is a value between Thread.MIN_PRIORITY 
+    (1) and Thread.MAX_PRIORITY (10).
+
+    Thread.currentThread() : return the current associated Thread 
+
+6. public void interrupt(): Interrupts the thread. If the thread is blocked in a call to wait(), sleep(), or join(), it will throw an InterruptedException.
+
+7. public static native void yield(): Thread.yield() is a static method that suggests the current thread temporarily pause its execution 
+  to allow other threads of the same or higher priority to execute. It’s important to note that yield() is just a hint to the thread 
+  scheduler, and the actual behavior may vary depending on the JVM and OS. Thread.yield();
+
+```
+public class MyThread extends Thread {
+    @Override
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println(Thread.currentThread().getName() + " is running...");
+            Thread.yield();
+        }
+    }
+
+    public static void main(String[] args) {
+        MyThread t1 = new MyThread(); 
+        MyThread t2 = new MyThread();
+        t1.start();
+        t2.start();
+    }
+}
+
+```
+
+8. public final void setDaemon(boolean on) : Marks the thread as either a daemon thread or a user thread. The Java Virtual Machine exits 
+   when the only threads running are all daemon threads.This method must be invoked before the thread is started
+9. public final boolean isDaemon()
 
 <h5>    Runnable Interface  </h5>
 Runnable is a functional interface representing a task that does not return a result and cannot throw checked exceptions.
