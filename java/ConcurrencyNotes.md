@@ -40,6 +40,12 @@ When to Use:
 	• The task does not throw checked exceptions.
 	• You’re working with APIs like Thread or Executor that only require a Runnable.
 
+Runnable vs Thread:
+
+Use Runnable when you want to separate the task from the thread, allowing the class to extend another class if needed.
+Extend Thread if you need to override Thread methods or if the task inherently requires direct control over the thread itself,
+though this limits inheritance.
+
 ```
 
 ```
