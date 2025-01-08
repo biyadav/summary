@@ -1,5 +1,11 @@
 https://www.slideshare.net/slideshow/java-notespdf-259708081/259708081
+
 https://medium.com/@amitvsolutions/challenge-yourself-90-days-to-improve-java-and-dsa-skills-f32b3008b07e
+
+https://www.slideshare.net/slideshow/java-se-8-for-java-ee-developers/54461691
+
+
+https://www.slideshare.net/slideshow/java-8-streams-collectors-patterns-performances-and-parallelization/41467564
 
 ```
 
