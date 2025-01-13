@@ -227,6 +227,9 @@ Summary
 # USer Thread Vs Daemon Thread 
 
 User threads are high priority threads which always run in foreground. Where as Daemon threads are low priority threads which always run in background. User threads are designed to do some specific task where as daemon threads are used to perform some supporting tasks.
+Default daemon status of a thread is inherited from it’s parent thread i.e a thread created by user thread will be a user thread and a thread created by a daemon thread will be a daemon thread.
+
+isDaemon() method is used to check whether a thread is daemon thread or not.
 
 1. JVM waits for user threads to finish their work. JVM will not exit until all user threads finish their tasks.JVM will not wait for 
     daemon threads to finish their work. It will exit as soon as all user threads finish their work.
