@@ -224,7 +224,18 @@ Summary
   • Use Callable for tasks where you need to compute and retrieve a result or handle exceptions.
 
 ```
+# USer Thread Vs Daemon Thread 
 
+User threads are high priority threads which always run in foreground. Where as Daemon threads are low priority threads which always run in background. User threads are designed to do some specific task where as daemon threads are used to perform some supporting tasks.
+
+1. JVM waits for user threads to finish their work. JVM will not exit until all user threads finish their tasks.JVM will not wait for 
+    daemon threads to finish their work. It will exit as soon as all user threads finish their work.
+2. User threads are foreground threads.	Daemon threads are background threads.
+3. User threads are high priority threads.Daemon threads are low priority threads.
+4. User threads are created by the application.	Daemon threads, in most of time, are created by the JVM.
+5. User threads are mainly designed to do some specific task.Daemon threads are designed to support the user threads.
+6. JVM will not force the user threads to terminate. It will wait for user threads to terminate themselves.JVM will force the daemon 
+   threads to terminate if all user threads have finished their work.
 
 <h4> Executor Framework </h4>
 
