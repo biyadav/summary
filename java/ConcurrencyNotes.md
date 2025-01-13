@@ -383,3 +383,4 @@ if (dataReadFuture.cancel(true)) {
 ```
 
 You can use synchronized keyword only with methods but not with variables, constructors, static initializers and instance initializers.
+you can use synchronised blocks within it 
