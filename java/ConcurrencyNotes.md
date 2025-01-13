@@ -227,7 +227,7 @@ Summary
 # USer Thread Vs Daemon Thread 
 
 User threads are high priority threads which always run in foreground. Where as Daemon threads are low priority threads which always run in background. User threads are designed to do some specific task where as daemon threads are used to perform some supporting tasks.
-Default daemon status of a thread is inherited from it’s parent thread i.e a thread created by user thread will be a user thread and a thread created by a daemon thread will be a daemon thread.
+Default daemon status of a thread is inherited from it’s parent thread i.e a thread created by user thread will be a user thread and a thread created by a daemon thread will be a daemon thread.You can convert user thread into daemon thread and vice-versa using setDaemon() method but before starting the thread.After starting the thread, calling setDaemon throws java.lang.IllegalThreadStateException.
 
 isDaemon() method is used to check whether a thread is daemon thread or not.
 
