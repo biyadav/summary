@@ -1,5 +1,5 @@
 # java.util.Optional
-
+```
 A container object which may or may not contain a non-null value. If a value is present, isPresent() returns true. 
 If no value is present, the object is considered empty and isPresent() returns false.orElse() (returns a default value if no value is present)
 and ifPresent() (performs an action if a value is present).
@@ -20,3 +20,5 @@ public Optional<T> filter(Predicate<? super T> predicate)  If a value is present
 Optional<Path> p = uris. stream().filter(uri -> !isProcessedYet(uri))
                    .findFirst()                   
                    .map(Paths::get);  Here, findFirst returns an Optional<URI>, and then map returns an Optional<Path> for the desired URI if one exists.
+
+```
