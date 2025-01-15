@@ -33,4 +33,5 @@ String s = String.valueOf(ch) // "5" convert to string 5
 int five = Integer.parseInt(s) //  result  5 .  Will not work with 'a' as Integer.parseInt("a")  NumberFormatException although a = 52
 
 Integer.intValue() // return primitive int
+ Integer.valueOf(int n) // convert primitive to Integer
 ```
