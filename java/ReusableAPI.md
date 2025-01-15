@@ -33,5 +33,8 @@ String s = String.valueOf(ch) // "5" convert to string 5
 int five = Integer.parseInt(s) //  result  5 .  Will not work with 'a' as Integer.parseInt("a")  NumberFormatException although a = 52
 
 Integer.intValue() // return primitive int
- Integer.valueOf(int n) // convert primitive to Integer
+Integer.valueOf(int n) // convert primitive to Integer   use constructor  integer two = new Integer(2);
+Integer.max(int x,int y)
+Integer.min(int x,int y)
+Integer.um(int x,int y)
 ```
