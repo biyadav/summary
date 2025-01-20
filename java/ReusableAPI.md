@@ -36,5 +36,5 @@ Integer.intValue() // return primitive int
 Integer.valueOf(int n) // convert primitive to Integer   use constructor  integer two = new Integer(2);
 Integer.max(int x,int y)
 Integer.min(int x,int y)
-Integer.um(int x,int y)
+Integer.sum(int x,int y)
 ```
