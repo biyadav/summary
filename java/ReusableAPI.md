@@ -13,6 +13,8 @@ Int to Char Conversion
 int i = 97; 
 char ch = (char)i; // Type casting character to integer  result : a
 
+Character.valueOf((char)ch)   where ch is int value of character 
+
 int i = 64;
 char ch = (char)(i + '0'); Via Type-casting With Adding Zero  result : p
  
