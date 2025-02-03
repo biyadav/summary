@@ -75,6 +75,8 @@ public class MyThread extends Thread {
 8. public final void setDaemon(boolean on) : Marks the thread as either a daemon thread or a user thread. The Java Virtual Machine exits 
    when the only threads running are all daemon threads.This method must be invoked before the thread is started
 9. public final boolean isDaemon()
+10. public static void sleep(long millis) throws InterruptedException
+    Causes the currently executing thread to sleep (temporarily cease execution) for the specified number of milliseconds,When the thread is going for sleep, it does not release the      synchronized locks it holds.
 
 <h5>    Runnable Interface  </h5>
 Runnable is a functional interface representing a task that does not return a result and cannot throw checked exceptions.
@@ -384,3 +386,21 @@ if (dataReadFuture.cancel(true)) {
 
 You can use synchronized keyword only with methods but not with variables, constructors, static initializers and instance initializers.
 you can use synchronised blocks within it 
+
+
+#  Object lock or monitor?
+
+The synchronization in Java is built around an entity called object lock or monitor. Below is the brief description about lock or monitor.
+
+Whenever an object is created to any class, an object lock is created and is stored inside the object.
+One object will have only one object lock associated with it.
+Any thread wants to enter into synchronized methods or blocks of any object, they must acquire object lock associated with that object and release the lock after they are done with the execution.
+The other threads which wants to enter into synchronized methods of that object have to wait until the currently executing thread releases the object lock.
+To enter into static synchronized methods or blocks, threads have to acquire class lock associated with that class as static members are stored inside the class memory.
+
+# Mutex
+synchronized block takes one argument and it is called mutex. If synchronized block is defined inside non-static definition blocks like non-static methods, instance initializer or constructors, then this mutex must be an instance of that class. If synchronized block is defined inside static definition blocks like static methods or static initializer, then this mutex must be like ClassName.class.
+
+# Synchrozied 
+
+Synchronized keyword can not be used with constructors. But, constructors can have synchronized blocks.You can use synchronized keyword only with methods but not with variables, constructors, static initializers and instance initializers.
