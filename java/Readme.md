@@ -1,3 +1,5 @@
+https://medium.com/@ketan.patel_46870/my-interview-experience-for-software-architect-java-position-4dc6dda35d9c
+
 https://medium.com/@amitvsolutions/java-summary-a-comprehensive-review-and-recap-995c4cb0b117
 
 https://medium.com/@amitvsolutions/java-8-workshop-on-lambdas-and-streams-162feb1e4184
