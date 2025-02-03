@@ -404,3 +404,27 @@ synchronized block takes one argument and it is called mutex. If synchronized bl
 # Synchrozied 
 
 Synchronized keyword can not be used with constructors. But, constructors can have synchronized blocks.You can use synchronized keyword only with methods but not with variables, constructors, static initializers and instance initializers.
+
+# Java Lock   java.util.concurrent.locks.Lock    Implementations java.util.concurrent.locks.ReentrantLock
+
+The Java Lock interface, java.util.concurrent.locks.Lock, represents a concurrent lock which can be used to guard against race conditions inside critical sections. 
+The main differences between a Lock and a synchronized block are:
+
+A synchronized block makes no guarantees about the sequence in which threads waiting to entering it are granted access.
+You cannot pass any parameters to the entry of a synchronized block. Thus, having a timeout trying to get access to a synchronized block is not possible.
+The synchronized block must be fully contained within a single method. A Lock can have it's calls to lock() and unlock() in separate methods.
+
+# Locking and unLocking java Lock 
+
+Obviously all threads must share the same Lock instance. If each thread creates its own Lock instance, then they will be locking on different locks, and thus not be blocking each other from access. <h2>To avoid exceptions locking a Lock forever, you should lock and unlock it from within a try-finally block,</h2> like this:
+```
+Lock lock = new ReentrantLock();
+
+try{
+    lock.lock();
+      //critical section
+} finally {
+    lock.unlock();
+}
+
+```
