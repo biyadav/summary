@@ -9,7 +9,7 @@ class Main {
       int max =Integer.MIN_VALUE,secondMax = Integer.MIN_VALUE;
       for(int element :array){
           if(element > max ){
-              secondMax = max;
+              secondMax = max; // first assign current max to second highest 
               max= element;
           }
             else if(element > secondMax ){
