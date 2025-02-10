@@ -66,3 +66,40 @@ class Main {
       System.out.println("Required number is " +result);
     }
 }
+
+# find continuous sub array whose sum is equal to given number
+
+```
+
+class Main {
+    public static void main(String[] args) {
+    
+      int inputArray [] = {12, 5, 31, 9, 21, 8} ;
+      int desiredSum = 45;
+      int left=0,right=1; // select left and right pointer 
+      
+      int currentSum = inputArray[left];  // dont take sum zero instead set to left item
+      
+      while(right <=inputArray.length-1){
+          currentSum = currentSum+inputArray[right]; // I did  left+right this was issue as I need to add only next right to existing sum 
+          System.out.println("currentSum "+ currentSum );
+         if (currentSum==desiredSum){
+             System.out.println("left " +left + "right "+ right );
+             break; // BREAK is important when result got 
+         }
+         else if(currentSum>desiredSum ){
+             left++;
+             currentSum = inputArray[left];
+             right= left+1;
+         }
+         else if(currentSum<desiredSum ){
+             right++;
+         }
+          System.out.println("left " +left + "right "+ right );
+      }
+      int[] result =java.util.Arrays.copyOfRange(inputArray,left,right+1);
+      System.out.println(java.util.Arrays.toString(result));
+    }
+}
+
+``
