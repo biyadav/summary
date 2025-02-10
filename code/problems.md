@@ -46,3 +46,23 @@ class Main {
 }
 
 ```
+
+# find largest number less than a given number and without a given digit
+
+```
+class Main {
+    public static void main(String[] args) {
+
+      int input =  145;
+      int unwantedDigit = 4;
+      int result = input;
+      
+      do
+        {
+           result--;  // at least decrese one time so do 
+        }
+      while ( String.valueOf(result).contains(String.valueOf(unwantedDigit)) ); // since we decrese one time only check if we dont have unwanted digit 
+      
+      System.out.println("Required number is " +result);
+    }
+}
