@@ -70,7 +70,6 @@ class Main {
 # find continuous sub array whose sum is equal to given number
 
 ```
-
 class Main {
     public static void main(String[] args) {
     
@@ -115,15 +114,15 @@ class Main {
       int insertPos = 0;
       for (int num : nums) {
         if (num != 0){ 
-      // start with 0 and if copy all non zero item at insertPos but increase
-      // insertPos only if we have found nonZero
+      /* start with 0 and if copy all non zero item at insertPos but increase
+       insertPos only if we have found nonZero */
          nums[insertPos] = num;
          insertPos++;
         }
      }
 
      while (insertPos < nums.length) { 
-     // we consumed all nonzero  now we need to fill all remaining position with zero
+     /* we consumed all nonzero  now we need to fill all remaining position with zero */
      nums[insertPos++] = 0;
     }
  }
