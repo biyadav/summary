@@ -1,4 +1,4 @@
-* Second Highest in a array *
+## Second Highest in a array 
 
 ```
 
@@ -21,7 +21,7 @@ class Main {
     }
 }
 ```
-# find a number is armstrong  ( number that is equal to the sum of its own digits each raised to the power of the number of digits)
+## find a number is armstrong  ( number that is equal to the sum of its own digits each raised to the power of the number of digits)
 
 ```
 
@@ -47,7 +47,7 @@ class Main {
 
 ```
 
-# find largest number less than a given number and without a given digit
+## find largest number less than a given number and without a given digit
 
 ```
 class Main {
@@ -102,10 +102,9 @@ class Main {
     }
 }
 
-``
+```
 
-
-# write a function to move all 0's to the end of array while maintaining the relative order of the non-zero elements.
+## write a function to move all 0's to the end of array while maintaining the relative order of the non-zero elements.
 
 ```
 
@@ -130,9 +129,9 @@ class Main {
 
 ```
 
-# Given an array nums of n integers where nums[i] is in the range [1, n], return an array of all the integers in the range [1, n] that do not appear in nums.
+## Given an array nums of n integers where nums[i] is in the range [1, n], return an array of all the integers in the range [1, n] that do not appear in nums.
 
-``
+```
 class Solution {
    public static void main(String[] args) {
      int nums [] = {2,4,4,3,4,2};
@@ -156,6 +155,7 @@ class Solution {
     }
 }
 ```
+
 Second way: chanage the number at position = currentNumber-1  . So if index idx is positive it means idx+1 was not in arary so item at idx was not changed to -ve.
 
 ```
