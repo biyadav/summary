@@ -1,4 +1,4 @@
-# Second Highest in a array 
+* Second Highest in a array *
 
 ```
 
@@ -66,8 +66,9 @@ class Main {
       System.out.println("Required number is " +result);
     }
 }
+```
 
-# find continuous sub array whose sum is equal to given number
+## find continuous sub array whose sum is equal to given number
 
 ```
 class Main {
