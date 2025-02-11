@@ -103,3 +103,30 @@ class Main {
 }
 
 ``
+
+
+# write a function to move all 0's to the end of array while maintaining the relative order of the non-zero elements.
+
+``
+
+class Main {
+    public static void main(String[] args) {
+      int nums [] = {20,4,2,0,0,10};
+      int insertPos = 0;
+      for (int num : nums) {
+        if (num != 0){ 
+      // start with 0 and if copy all non zero item at insertPos but increase
+      // insertPos only if we have found nonZero
+         nums[insertPos] = num;
+         insertPos++;
+        }
+     }
+
+     while (insertPos < nums.length) { 
+     // we consumed all nonzero  now we need to fill all remaining position with zero
+     nums[insertPos++] = 0;
+    }
+ }
+}
+
+```
