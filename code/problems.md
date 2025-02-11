@@ -128,3 +128,62 @@ class Main {
 }
 
 ```
+
+# Given an array nums of n integers where nums[i] is in the range [1, n], return an array of all the integers in the range [1, n] that do not appear in nums.
+
+``
+class Solution {
+   public static void main(String[] args) {
+     int nums [] = {2,4,4,3,4,2};
+   findDisappearedNumbers(nums).forEach(x->
+       System.out.println(x)) ;
+   }
+   // take the num and set num-1 index = true // missing are num for which num-1 is not true 
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        int n = nums.length; 
+        boolean[] s = new boolean[n + 1];
+        for (int x : nums) {
+            s[x] = true;
+        }
+        List<Integer> ans = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            if (!s[i]) {
+                ans.add(i);
+            }
+        }
+        return ans;
+    }
+}
+```
+Second way: chanage the number at position = currentNumber-1  . So if index idx is positive it means idx+1 was not in arary so item at idx was not changed to -ve.
+
+```
+class Solution {
+
+ public static void main(String[] args) {
+    int nums [] = {2,4,4,3,4,2};
+    findDisappearedNumbers(nums).forEach(x->
+       System.out.println(x)) ;
+   }
+public List<Integer> findDisappearedNumbers(int[] nums) {
+        int n = nums.length;
+        for (int x : nums) {
+            int i = Math.abs(x) - 1;
+            if (nums[i] > 0) { // must not change negative to positive due to even occurrrence of same num
+                nums[i] *= -1;
+            }
+        }
+        List<Integer> ans = new ArrayList<>();
+        for (int idx = 0; idx < n; idx++) {
+            if (nums[idx] > 0) {
+                ans.add(idx + 1);
+            }
+        }
+        return ans;
+    }
+    
+}
+```
+
+
+``
