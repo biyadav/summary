@@ -272,6 +272,29 @@ essentially unbounded for the out-of-box executors provided by the JDK.
 * Thread reuse
 * Error handling
 
+<h5> java.util.concurrent.Executor </h5>
+This interface provides a way of decoupling task submission from the mechanics of how each task will be run, 
+void execute(Runnable command); 
+
+<h5> java.util.concurrent.ExecutorService</h5>
+  extends the Executor interface 
+
+An Executor that provides methods to manage termination and methods that can produce a Future for tracking progress of one or more asynchronous tasks.
+An ExecutorService can be shut down, which will cause it to reject new tasks. The shutdown method will allow previously submitted tasks to execute before terminating, while the shutdownNow method prevents waiting tasks from starting and attempts to stop currently executing tasks.  An unused ExecutorService should be shut down to allow reclamation of its resources.
+Method submit extends base method Executor.execute(Runnable) by creating and returning a Future that can be used to cancel execution and/ or wait for completion.
+Methods invokeAny and invokeAll perform the most commonly useful forms of bulk execution, executing a collection of tasks and then waiting for at least one, or all, to complete. 
+
+ *  void shutdown() Initiates an orderly shutdown in which previously submitted tasks are executed, but no new tasks will be accepted.
+ *  List<Runnable> shutdownNow() Attempts to stop all actively executing tasks, halts the processing of waiting tasks, and returns a list of the tasks that were awaiting execution.
+ *  boolean isShutdown()
+ *  boolean isTerminated() isTerminated is never true unless either shutdown or shutdownNow was called first. Returns true if all tasks have completed following shut down
+ *  <T> Future<T> submit(Callable<T> task) Submits a value-returning task for execution and returns a Future representing the pending results of the task.
+ *  <T> Future<T> submit(Runnable task, T result)
+ *  Future<?> submit(Runnable task)
+ *  <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks)
+ *  <T> T invokeAny(Collection<? extends Callable<T>> tasks)
+
+
 <h5>  SingleThreadExecutor  </h5>
  Has only a single thread. It is used to execute tasks in a sequential manner. If the thread dies due to an exception while executing a task,
  a new thread is created to replace the old thread and the subsequent tasks are executed in the new one.
