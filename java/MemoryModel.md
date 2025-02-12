@@ -20,11 +20,11 @@
 		○ Grows dynamically based on the application’s needs.
 		○ Configurable using -XX:MetaspaceSize and -XX:MaxMetaspaceSize.
 
-Garbage Collection (GC) and Tuning
-Garbage Collection in Java is responsible for reclaiming memory by removing unused objects. 
-GC algorithms and configurations are critical for performance.
+## Garbage Collection (GC) and Tuning
+    Garbage Collection in Java is responsible for reclaiming memory by removing unused objects. 
+    GC algorithms and configurations are critical for performance.
 
-Garbage Collection Algorithms
+## Garbage Collection Algorithms
 	1. Serial GC (-XX:+UseSerialGC):
 		○ Single-threaded GC.
 		○ Best for single-threaded applications or small heaps.
@@ -57,10 +57,12 @@ Garbage Collection Algorithms
 		○ Low-latency collector similar to ZGC.
 		○ Suitable for applications requiring predictable latency.
 
-GC Logs and Monitoring
-Enable GC logging for performance analysis:
--XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:gc.log
-Heap Configuration Options
+
+## GC Logs and Monitoring
+* Enable GC logging for performance analysis:
+   -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:gc.log
+
+* Heap Configuration Options
 	1. Heap Size:
 		○ -Xms<size>: Initial heap size.
 		○ -Xmx<size>: Maximum heap size.
@@ -73,21 +75,18 @@ Heap Configuration Options
 		○ -XX:MetaspaceSize=<size>: Initial metaspace size.
 		○ -XX:MaxMetaspaceSize=<size>: Maximum metaspace size.
 
-Practical Tuning Example
-Scenario: High-throughput Web Service
+## Practical Tuning Example
+ Scenario: High-throughput Web Service
 	• Use Parallel GC for maximizing throughput:
 	-XX:+UseParallelGC -Xms1g -Xmx4g -XX:NewRatio=2 -XX:SurvivorRatio=8 -XX:MaxGCPauseMillis=200
-Scenario: Low-latency Trading Application
+
+ Scenario: Low-latency Trading Application
 	• Use G1 GC for predictable pause times:
-
--XX:+UseG1GC -Xms4g -Xmx8g -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=16m
-Scenario: Real-time Analytics (Large Heap)
+         -XX:+UseG1GC -Xms4g -Xmx8g -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=16m
+ 
+ Scenario: Real-time Analytics (Large Heap)
 	• Use ZGC for ultra-low latency:
-
--XX:+UseZGC -Xms16g -Xmx64g
-
-
-
+        -XX:+UseZGC -Xms16g -Xmx64g
 
 
 # Example GC Log Snippet and Explanation
@@ -147,7 +146,7 @@ Each phase contributes to the overall pause time:
 7. Pause Time
 	• 22.0ms: The total pause time for this GC cycle was 22 milliseconds.
 
-Insights from the Log
+## Insights from the Log
 	1. Performance:
 		○ The GC pause time (22ms) is well within the target for applications aiming for low latency.
 	2. Heap Usage:
@@ -158,7 +157,8 @@ Insights from the Log
 	4. No Humongous Objects:
 		○ No large objects (taking up an entire region) were detected during this GC cycle.
 
-Example Adjustments Based on Logs
+## Example Adjustments Based on Logs
+
 If the GC Pause Time is High:
 	1. Increase GC Threads:
 		○ -XX:ParallelGCThreads=16: Increase the number of parallel threads for GC.
@@ -166,6 +166,7 @@ If the GC Pause Time is High:
 		○ -XX:G1HeapRegionSize=8m: Adjust region size to balance the number of regions processed.
 	3. Optimize Pause Target:
 		○ -XX:MaxGCPauseMillis=20: Set a stricter pause time goal.
+  
 If Frequent Minor GCs Occur:
 	1. Increase Young Generation Size:
 		○ -XX:NewRatio=2: Allocate more memory to the young generation.
