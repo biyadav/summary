@@ -226,7 +226,7 @@ Summary
   • Use Callable for tasks where you need to compute and retrieve a result or handle exceptions.
 
 ```
-# USer Thread Vs Daemon Thread 
+## USer Thread Vs Daemon Thread 
 
 User threads are high priority threads which always run in foreground. Where as Daemon threads are low priority threads which always run in background. User threads are designed to do some specific task where as daemon threads are used to perform some supporting tasks.
 Default daemon status of a thread is inherited from it’s parent thread i.e a thread created by user thread will be a user thread and a thread created by a daemon thread will be a daemon thread.You can convert user thread into daemon thread and vice-versa using setDaemon() method but before starting the thread.After starting the thread, calling setDaemon throws java.lang.IllegalThreadStateException.
@@ -264,6 +264,13 @@ swapped out and another thread comes in for execution.
 Thread pools overcome this issue by keeping the threads alive and reusing the threads. Any excess tasks flowing in that the threads in the
 pool can handle are held in a Queue. Once any of the threads get free, they pick up the next task from this queue. This task queue is
 essentially unbounded for the out-of-box executors provided by the JDK.
+
+### Benefits of Executors framework
+* Avoiding Manual Thread management
+* Resource management
+* Scalability
+* Thread reuse
+* Error handling
 
 <h5>  SingleThreadExecutor  </h5>
  Has only a single thread. It is used to execute tasks in a sequential manner. If the thread dies due to an exception while executing a task,
@@ -388,7 +395,7 @@ You can use synchronized keyword only with methods but not with variables, const
 you can use synchronised blocks within it 
 
 
-#  Object lock or monitor?
+##  Object lock or monitor?
 
 The synchronization in Java is built around an entity called object lock or monitor. Below is the brief description about lock or monitor.
 
@@ -398,22 +405,64 @@ Any thread wants to enter into synchronized methods or blocks of any object, the
 The other threads which wants to enter into synchronized methods of that object have to wait until the currently executing thread releases the object lock.
 To enter into static synchronized methods or blocks, threads have to acquire class lock associated with that class as static members are stored inside the class memory.
 
-# Mutex
+##  Mutex
 synchronized block takes one argument and it is called mutex. If synchronized block is defined inside non-static definition blocks like non-static methods, instance initializer or constructors, then this mutex must be an instance of that class. If synchronized block is defined inside static definition blocks like static methods or static initializer, then this mutex must be like ClassName.class.
 
-# Synchrozied 
+## Synchrozied 
 
 Synchronized keyword can not be used with constructors. But, constructors can have synchronized blocks.You can use synchronized keyword only with methods but not with variables, constructors, static initializers and instance initializers.
 
-# Java Lock   java.util.concurrent.locks.Lock    Implementations java.util.concurrent.locks.ReentrantLock
+##  Java Lock   java.util.concurrent.locks.Lock    Implementations java.util.concurrent.locks.ReentrantLock
 
 The Java Lock interface, java.util.concurrent.locks.Lock, represents a concurrent lock which can be used to guard against race conditions inside critical sections. 
 The main differences between a Lock and a synchronized block are:
 
-A synchronized block makes no guarantees about the sequence in which threads waiting to entering it are granted access.
+Synchronized locks the entire method or block, leading to potential performance issues. It lacks a try-lock mechanism, causing threads to block indefinitely,
+increasing the risk of deadlocks.A synchronized block makes no guarantees about the sequence in which threads waiting to entering it are granted access.
 You cannot pass any parameters to the entry of a synchronized block. Thus, having a timeout trying to get access to a synchronized block is not possible.
 The synchronized block must be fully contained within a single method. A Lock can have it's calls to lock() and unlock() in separate methods.
 
+## Reentrant Lock
+A Reentrant Lock in Java is a type of lock that allows a thread to acquire the same lock multiple times without causing a deadlock. If a thread already holds the lock,
+it can re-enter the lock without being blocked. This is useful when a thread needs to repeatedly enter synchronized blocks or methods within the same execution flow. 
+
+```
+public class ReentrantExample {
+    private final Lock lock = new ReentrantLock();
+
+    public void outerMethod() {
+        lock.lock();
+        try {
+            System.out.println("Outer method");
+            innerMethod();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void innerMethod() {
+        lock.lock();
+        try {
+            System.out.println("Inner method");
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public static void main(String[] args) {
+        ReentrantExample example = new ReentrantExample();
+        example.outerMethod();
+    }
+}
+
+```
+
+##  Methods of ReentrantLock
+
+* lock() blocks until lock acquired
+* tryLock() unblocking wont wait for lock  return true or false whether lock acquired 
+* tryLock(long timeout, TimeUnit unit)
+* unlock()
 # Locking and unLocking java Lock 
 
 Obviously all threads must share the same Lock instance. If each thread creates its own Lock instance, then they will be locking on different locks, and thus not be blocking each other from access. <h2>To avoid exceptions locking a Lock forever, you should lock and unlock it from within a try-finally block,</h2> like this:
@@ -428,3 +477,83 @@ try{
 }
 
 ```
+
+## Read Write Lock
+
+A Read-Write Lock allows multiple threads to read shared data simultaneously while restricting write access to a single thread at a time.  ReentrantReadWriteLock class in Java optimizes performance in scenarios with frequent read operations and infrequent writes. Multiple readers can acquire the read lock without blocking each other, but when a thread needs to write, it must acquire the write lock, ensuring exclusive access .
+
+```
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+public class ReadWriteCounter {
+    private int count = 0;
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
+    private final Lock readLock = lock.readLock();
+    private final Lock writeLock = lock.writeLock();
+
+    public void increment() {
+        writeLock.lock();
+        try {
+            count++;
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            writeLock.unlock();
+        }
+    }
+
+    public int getCount() {
+        readLock.lock();
+        try {
+            return count;
+        } finally {
+            readLock.unlock();
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        ReadWriteCounter counter = new ReadWriteCounter();
+
+        Runnable readTask = new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 10; i++) {
+                    System.out.println(Thread.currentThread().getName() + " read: " + counter.getCount());
+                }
+            }
+        };
+
+        Runnable writeTask = new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 10; i++) {
+                    counter.increment();
+                    System.out.println(Thread.currentThread().getName() + " incremented");
+                }
+            }
+        };
+
+        Thread writerThread = new Thread(writeTask);
+        Thread readerThread1 = new Thread(readTask);
+        Thread readerThread2 = new Thread(readTask);
+
+        writerThread.start();
+        readerThread1.start();
+        readerThread2.start();
+
+        writerThread.join();
+        readerThread1.join();
+        readerThread2.join();
+
+        System.out.println("Final count: " + counter.getCount());
+    }
+}
+```
+
+## Fairness of Locks
+
+A fair lock ensures that threads acquire the lock in the order they requested it, preventing thread starvation. With a fair lock, if multiple threads are waiting, the longest-waiting thread is granted the lock next. However, fairness can lead to lower throughput due to the overhead of maintaining the order. Non-fair locks, in contrast offer better performance but at the risk of some threads waiting indefinitely.   private final Lock fairLock = new ReentrantLock(true); // pass true in constructor
