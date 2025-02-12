@@ -159,17 +159,17 @@ Each phase contributes to the overall pause time:
 
 ## Example Adjustments Based on Logs
 
-If the GC Pause Time is High:
-	1. Increase GC Threads:
-		○ -XX:ParallelGCThreads=16: Increase the number of parallel threads for GC.
-	2. Tune Region Size:
-		○ -XX:G1HeapRegionSize=8m: Adjust region size to balance the number of regions processed.
-	3. Optimize Pause Target:
-		○ -XX:MaxGCPauseMillis=20: Set a stricter pause time goal.
+ * If the GC Pause Time is High:
+    1. Increase GC Threads:
+	 -XX:ParallelGCThreads=16: Increase the number of parallel threads for GC.
+    2. Tune Region Size:
+	 -XX:G1HeapRegionSize=8m: Adjust region size to balance the number of regions processed.
+    3. Optimize Pause Target:
+         -XX:MaxGCPauseMillis=20: Set a stricter pause time goal.
   
-If Frequent Minor GCs Occur:
-	1. Increase Young Generation Size:
-		○ -XX:NewRatio=2: Allocate more memory to the young generation.
-	2. Survivor Space Tuning:
-		○ -XX:SurvivorRatio=6: Adjust the Eden-to-Survivor space ratio
+* If Frequent Minor GCs Occur:
+    1. Increase Young Generation Size:
+       -XX:NewRatio=2: Allocate more memory to the young generation.
+    2. Survivor Space Tuning:
+       -XX:SurvivorRatio=6: Adjust the Eden-to-Survivor space ratio
 ![image](https://github.com/user-attachments/assets/b5437478-5c02-44fd-98bc-19a0f002274f)
