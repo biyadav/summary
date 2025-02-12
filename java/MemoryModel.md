@@ -172,4 +172,6 @@ Each phase contributes to the overall pause time:
        -XX:NewRatio=2: Allocate more memory to the young generation.
     2. Survivor Space Tuning:
        -XX:SurvivorRatio=6: Adjust the Eden-to-Survivor space ratio
-![image](https://github.com/user-attachments/assets/b5437478-5c02-44fd-98bc-19a0f002274f)
+
+
+
