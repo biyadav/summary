@@ -91,7 +91,7 @@
 
 # Example GC Log Snippet and Explanation
 
-
+```
 [0.238s][info][gc,start] GC(0) Pause Young (Normal) (G1 Evacuation Pause)
 [0.238s][info][gc,task] GC(0) Using 8 workers for evacuation
 [0.260s][info][gc,phases] GC(0)   Pre Evacuate Collection Set: 0.2ms
@@ -104,7 +104,7 @@
 [0.260s][info][gc,heap] GC(0) Humongous regions: 0->0
 [0.260s][info][gc,metaspace] GC(0) Metaspace: 10M->10M(105M)
 [0.260s][info][gc] GC(0) Pause Young (Normal) (G1 Evacuation Pause) 22.0ms
-
+```
 
 Breakdown of the Log
 1. Time Stamps and Event Type
