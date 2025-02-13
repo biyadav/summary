@@ -1,3 +1,5 @@
+https://archive.is/h5aP6   java 8 example
+
 https://medium.com/@ketan.patel_46870/my-interview-experience-for-software-architect-java-position-4dc6dda35d9c
 
 https://medium.com/@amitvsolutions/java-summary-a-comprehensive-review-and-recap-995c4cb0b117
