@@ -580,3 +580,21 @@ public class ReadWriteCounter {
 ## Fairness of Locks
 
 A fair lock ensures that threads acquire the lock in the order they requested it, preventing thread starvation. With a fair lock, if multiple threads are waiting, the longest-waiting thread is granted the lock next. However, fairness can lead to lower throughput due to the overhead of maintaining the order. Non-fair locks, in contrast offer better performance but at the risk of some threads waiting indefinitely.   private final Lock fairLock = new ReentrantLock(true); // pass true in constructor
+
+
+
+
+
+
+## Is it possible to declare a constructor as synchronized?
+
+No, constructors cannot be synchronized because object locks do not exist until the object is created. However, synchronized blocks can be used inside constructors.
+```
+class Test {
+    Test() {
+        synchronized (this) {
+            System.out.println("Synchronized block in constructor");
+        }
+    }
+}
+```
