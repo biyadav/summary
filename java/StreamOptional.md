@@ -22,3 +22,45 @@ Optional<Path> p = uris. stream().filter(uri -> !isProcessedYet(uri))
                    .map(Paths::get);  Here, findFirst returns an Optional<URI>, and then map returns an Optional<Path> for the desired URI if one exists.
 
 ```
+
+
+
+##  java.util.stream.Collectors  default method 
+
+
+
+averaging	              averagingDouble(), averagingLong(), averagingInt()	To average elements of type Double/Long/Integer after applying a mapping function to the elements to 
+                        extract respective values to be averaged
+                                  
+counting	              counting()	Count the number of stream elements
+
+grouping	              groupingBy()	To produce Map of elements grouped by grouping criteria provided
+
+String concatenation	  joining()	For concatenation of stream elements into a single String
+
+mapping	mapping()	      Applying a mapping operation to all stream elements being collected
+
+minimum and maximum     determination	minBy()/maxBy()	   To find minimum/maximum of all stream elements based on Comparator provided
+
+partitioning	          partitioningBy()	To partition stream elements into a Map based on the Predicate provided
+
+reduction	              reducing()	Reducing elements of stream based on BinaryOperator function provided
+
+summarization	          summarizingDouble(), summarizingLong(), summarizingInt()	To summarize stream elements after mapping them to Double/Long/Integer value
+                        using specific type Function
+                      
+summation	              summingDouble(), summingLong(), summingInt()	To sum-up stream elements after mapping them to Double/Long/Integer value using specific type Function
+                        
+collect in Collection	  toCollection()	To collect stream elements into a collection in arg pass HashMap::new 
+                      
+collect                 into a Map/ConcurrentMap	toMap()/toConcurrentMap()	  To collect stream elements into a map/concurrent map after applying provided key/value determination 
+                        Function instances to the elements
+                      
+collect in a List	      toList()	Collects stream elements in a List
+
+collect in a Set	      toSet()	Collects stream elements in a Set
+
+collect and transform	  collectingAndThen()	Collects stream elements and then transforms them using a Function
+
+
+
