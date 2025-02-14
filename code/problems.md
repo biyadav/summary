@@ -185,4 +185,35 @@ public List<Integer> findDisappearedNumbers(int[] nums) {
     
 }
 ```
+## Find continuous sub array whose sum is equal to given number?
 
+```
+import java.util.Arrays;
+class Main {
+    public static void main(String[] args) {
+     
+     int numbers [] = new int[]{ 4,5,10,3,6,8};
+     int targetSum = 19;
+
+     int left= 0, right=left+1 ,// ALWAYS MAKE RIGHT = LEFT+1
+     int currentSum=numbers[left];// initialize to current left  NEVER ADD LEFT AND RIGHT AS LEFT WILL BE ADDED EVERY TIME 
+     while (right <numbers.length){
+         currentSum = currentSum+numbers[right];
+          System.out.println("Sum is "+currentSum);
+         if(currentSum == targetSum){
+           System.out.println (java.util.Arrays.toString(
+               java.util.Arrays.copyOfRange(numbers,left, right+1)));
+               return ;
+         }
+         else if(currentSum< targetSum){
+             right++;
+         }
+         else{
+             left++;
+             right = left+1;
+         }
+         
+     }
+    }
+}
+```
