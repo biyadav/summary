@@ -40,3 +40,5 @@ Integer.max(int x,int y)
 Integer.min(int x,int y)
 Integer.sum(int x,int y)
 ```
+
+Comparator c= String.CASE_INSENSITIVE_ORDER
