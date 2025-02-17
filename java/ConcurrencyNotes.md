@@ -830,10 +830,12 @@ class Worker implements Runnable {
 ```
 
 ```
+/*
 Strategy 2: Use a Shared Data Structure for Error Reporting 
 
 We can use a shared data structure (e.g., a ConcurrentLinkedQueue) to collect exceptions from worker threads.
 The main thread can then check this structure after all threads have completed to handle any errors.
+*/
 
 import java.util.ArrayList;
 import java.util.List;
