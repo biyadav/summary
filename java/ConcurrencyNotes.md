@@ -14,8 +14,6 @@
 
 Provides a way to create and manage threads.
 Key Methods:
-
-STEPS :
  • public synchronized void start(): Starts the thread.
  • public void run(): Defines the code executed by the thread.
  • public final void join() throws InterruptedException: Waits for a thread to finish execution.
