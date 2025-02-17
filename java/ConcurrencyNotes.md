@@ -926,3 +926,18 @@ class Worker implements Runnable {
 }
 
 ```
+
+## java.util.concurrent.CyclicBarrier
+
+
+A CyclicBarrier allows a set of threads to all wait for each other to reach a common barrier point.
+Once all threads have reached this point, the barrier is "broken," and all threads are released to continue their execution.
+CyclicBarriers are used in programs in which we have a fixed number of threads that must wait for each other to reach a common point before continuing execution.
+The barrier can be reused, making it cyclic.
+
+The threads that need to synchronize their execution are also called parties and calling the await() method is how we can register that a certain thread has reached the barrier point.
+This call is synchronous and the thread calling this method suspends execution till a specified number of threads have called the same method on the barrier. This situation where the required number of threads have called await(), is called tripping the barrier.
+
+Optionally, we can pass the second argument to the constructor, which is a Runnable instance. This has logic that would be run by the last thread that trips the barrier:
+public CyclicBarrier(int parties, Runnable barrierAction)
+
