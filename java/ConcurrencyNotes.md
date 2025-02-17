@@ -598,6 +598,17 @@ class Test {
 }
 ```
 
+##  Java Concurrency – Synchronizers
+The java.util.concurrent package contains several classes that help manage a set of threads that collaborate with each other.
+
+- CyclicBarrier
+- Semaphore
+- CountDownLatch
+- SynchronousQueue
+- Phaser
+- Exchanger
+
+
 ##  java.util.concurrent.CountDownLatch 
 
 A CountDownLatch is a synchronization aid in Java that allows one or more threads to wait until a set of operations being performed in other threads completes.
