@@ -598,3 +598,69 @@ class Test {
     }
 }
 ```
+
+##  java.util.concurrent.CountDownLatch 
+
+A CountDownLatch is a synchronization aid in Java that allows one or more threads to wait until a set of operations being performed in other threads completes.
+
+* Initialization: You initialize a CountDownLatch with a given count. This count is the number of times the countDown() method must be invoked before the threads waiting on the latch 
+  can proceed.
+
+* Waiting: Threads call the await() method on the latch to wait until the count reaches zero.
+
+* Counting Down: Other threads call the countDown() method to decrease the count. When the count reaches zero, all waiting threads are released.
+
+```
+
+In this Example all worker thread will wait untill Main thread call countdown on startSignal so all start at same time .
+Then main method will wait when all thread complete their task collectively making count zero  calling coutdown on doneSignal.
+
+import java.util.concurrent.CountDownLatch;
+
+public class StartTogetherExample {
+    public static void main(String[] args) {
+        int numberOfThreads = 5;
+        CountDownLatch startSignal = new CountDownLatch(1);
+        CountDownLatch doneSignal = new CountDownLatch(numberOfThreads);
+
+        for (int i = 0; i < numberOfThreads; i++) {
+            new Thread(new Worker(startSignal, doneSignal)).start();
+        }
+
+        try {
+            System.out.println("Ready... Set... Go!");
+            startSignal.countDown(); // Release all threads to start at the same time
+            doneSignal.await(); // Wait for all threads to finish
+            System.out.println("All threads have finished.");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class Worker implements Runnable {
+    private final CountDownLatch startSignal;
+    private final CountDownLatch doneSignal;
+
+    Worker(CountDownLatch startSignal, CountDownLatch doneSignal) {
+        this.startSignal = startSignal;
+        this.doneSignal = doneSignal;
+    }
+
+    @Override
+    public void run() {
+        try {
+            startSignal.await(); // Wait for the start signal
+            // Simulate some work
+            Thread.sleep((long) (Math.random() * 1000));
+            System.out.println(Thread.currentThread().getName() + " finished work.");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            doneSignal.countDown(); // Signal that this thread has finished
+        }
+    }
+}
+
+```
+
