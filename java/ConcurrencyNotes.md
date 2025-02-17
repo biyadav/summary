@@ -673,3 +673,243 @@ class Worker implements Runnable {
 
 ```
 
+# Complex Scenario :Parallel Data Processing
+
+Imagine we have a large list of numbers, and we want to calculate the sum of squares of these numbers using multiple threads. Each thread will process a portion of the list, and the main thread will wait for all threads to complete before combining the results.
+<h4> Step-by-Step Implementation </h4>
+
+* Initialize the CountDownLatch: Create a CountDownLatch with the count equal to the number of worker threads.
+* Divide the Task: Split the list into smaller sublists, each to be processed by a separate worker thread.
+* Process the Data: Each worker thread calculates the sum of squares for its sublist and stores the result.
+* Combine the Results: The main thread waits for all threads to complete and then combines the results.
+
+```
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+
+public class ParallelDataProcessingExample {
+    public static void main(String[] args) {
+        int numberOfThreads = 4;
+        List<Integer> data = generateData(1000); // Generate a list of 1000 numbers
+        CountDownLatch latch = new CountDownLatch(numberOfThreads);
+        List<Worker> workers = new ArrayList<>();
+
+        // Divide the data into sublists and create worker threads
+        int chunkSize = data.size() / numberOfThreads;
+        for (int i = 0; i < numberOfThreads; i++) {
+            int start = i * chunkSize;
+            int end = (i == numberOfThreads - 1) ? data.size() : start + chunkSize;
+            List<Integer> sublist = data.subList(start, end);
+            Worker worker = new Worker(sublist, latch);
+            workers.add(worker);
+            new Thread(worker).start();
+        }
+
+        try {
+            latch.await(); // Wait for all threads to finish
+            int totalSumOfSquares = workers.stream().mapToInt(Worker::getSumOfSquares).sum();
+            System.out.println("Total sum of squares: " + totalSumOfSquares);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static List<Integer> generateData(int size) {
+        List<Integer> data = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            data.add(i + 1);
+        }
+        return data;
+    }
+}
+
+class Worker implements Runnable {
+    private final List<Integer> data;
+    private final CountDownLatch latch;
+    private int sumOfSquares;
+
+    Worker(List<Integer> data, CountDownLatch latch) {
+        this.data = data;
+        this.latch = latch;
+    }
+
+    @Override
+    public void run() {
+        sumOfSquares = data.stream().mapToInt(i -> i * i).sum();
+        System.out.println(Thread.currentThread().getName() + " calculated sum of squares: " + sumOfSquares);
+        latch.countDown(); // Signal that this thread has finished
+    }
+
+    public int getSumOfSquares() {
+        return sumOfSquares;
+    }
+}
+
+```
+
+## Handling Exception in Worker Threads 
+
+
+
+```
+/*
+Strategy 1: Catch and Log Exceptions in Worker Threads:
+
+Ensure that each worker thread catches and logs any exceptions that occur during its execution.
+This prevents the thread from terminating abruptly and allows you to handle the error appropriately.
+*/
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+
+public class ExceptionHandlingExample {
+    public static void main(String[] args) {
+        int numberOfThreads = 4;
+        List<Integer> data = generateData(1000); // Generate a list of 1000 numbers
+        CountDownLatch latch = new CountDownLatch(numberOfThreads);
+        List<Worker> workers = new ArrayList<>();
+
+        // Divide the data into sublists and create worker threads
+        int chunkSize = data.size() / numberOfThreads;
+        for (int i = 0; i < numberOfThreads; i++) {
+            int start = i * chunkSize;
+            int end = (i == numberOfThreads - 1) ? data.size() : start + chunkSize;
+            List<Integer> sublist = data.subList(start, end);
+            Worker worker = new Worker(sublist, latch);
+            workers.add(worker);
+            new Thread(worker).start();
+        }
+
+        try {
+            latch.await(); // Wait for all threads to finish
+            int totalSumOfSquares = workers.stream().mapToInt(Worker::getSumOfSquares).sum();
+            System.out.println("Total sum of squares: " + totalSumOfSquares);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static List<Integer> generateData(int size) {
+        List<Integer> data = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            data.add(i + 1);
+        }
+        return data;
+    }
+}
+
+class Worker implements Runnable {
+    private final List<Integer> data;
+    private final CountDownLatch latch;
+    private int sumOfSquares;
+
+    Worker(List<Integer> data, CountDownLatch latch) {
+        this.data = data;
+        this.latch = latch;
+    }
+
+    @Override
+    public void run() {
+        try {
+            sumOfSquares = data.stream().mapToInt(i -> i * i).sum();
+            System.out.println(Thread.currentThread().getName() + " calculated sum of squares: " + sumOfSquares);
+        } catch (Exception e) {
+            System.err.println(Thread.currentThread().getName() + " encountered an error: " + e.getMessage());
+        } finally {
+            latch.countDown(); // Signal that this thread has finished
+        }
+    }
+
+    public int getSumOfSquares() {
+        return sumOfSquares;
+    }
+}
+
+```
+
+```
+Strategy 2: Use a Shared Data Structure for Error Reporting 
+
+We can use a shared data structure (e.g., a ConcurrentLinkedQueue) to collect exceptions from worker threads.
+The main thread can then check this structure after all threads have completed to handle any errors.
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CountDownLatch;
+
+public class ExceptionHandlingWithQueueExample {
+    public static void main(String[] args) {
+        int numberOfThreads = 4;
+        List<Integer> data = generateData(1000); // Generate a list of 1000 numbers
+        CountDownLatch latch = new CountDownLatch(numberOfThreads);
+        Queue<Exception> exceptions = new ConcurrentLinkedQueue<>();
+        List<Worker> workers = new ArrayList<>();
+
+        // Divide the data into sublists and create worker threads
+        int chunkSize = data.size() / numberOfThreads;
+        for (int i = 0; i < numberOfThreads; i++) {
+            int start = i * chunkSize;
+            int end = (i == numberOfThreads - 1) ? data.size() : start + chunkSize;
+            List<Integer> sublist = data.subList(start, end);
+            Worker worker = new Worker(sublist, latch, exceptions);
+            workers.add(worker);
+            new Thread(worker).start();
+        }
+
+        try {
+            latch.await(); // Wait for all threads to finish
+            if (!exceptions.isEmpty()) {
+                System.err.println("Errors occurred during processing:");
+                exceptions.forEach(e -> System.err.println(e.getMessage()));
+            } else {
+                int totalSumOfSquares = workers.stream().mapToInt(Worker::getSumOfSquares).sum();
+                System.out.println("Total sum of squares: " + totalSumOfSquares);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static List<Integer> generateData(int size) {
+        List<Integer> data = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            data.add(i + 1);
+        }
+        return data;
+    }
+}
+
+class Worker implements Runnable {
+    private final List<Integer> data;
+    private final CountDownLatch latch;
+    private final Queue<Exception> exceptions;
+    private int sumOfSquares;
+
+    Worker(List<Integer> data, CountDownLatch latch, Queue<Exception> exceptions) {
+        this.data = data;
+        this.latch = latch;
+        this.exceptions = exceptions;
+    }
+
+    @Override
+    public void run() {
+        try {
+            sumOfSquares = data.stream().mapToInt(i -> i * i).sum();
+            System.out.println(Thread.currentThread().getName() + " calculated sum of squares: " + sumOfSquares);
+        } catch (Exception e) {
+            exceptions.add(e);
+        } finally {
+            latch.countDown(); // Signal that this thread has finished
+        }
+    }
+
+    public int getSumOfSquares() {
+        return sumOfSquares;
+    }
+}
+
+```
