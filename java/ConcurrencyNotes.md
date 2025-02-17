@@ -15,9 +15,10 @@
 Provides a way to create and manage threads.
 Key Methods:
 
-• public synchronized void start(): Starts the thread.
-• public void run(): Defines the code executed by the thread.
-• public final void join() throws InterruptedException: Waits for a thread to finish execution.
+STEPS :
+ • public synchronized void start(): Starts the thread.
+ • public void run(): Defines the code executed by the thread.
+ • public final void join() throws InterruptedException: Waits for a thread to finish execution.
 
 Example:
 ```
@@ -603,12 +604,22 @@ class Test {
 
 A CountDownLatch is a synchronization aid in Java that allows one or more threads to wait until a set of operations being performed in other threads completes.
 
-* Initialization: You initialize a CountDownLatch with a given count. This count is the number of times the countDown() method must be invoked before the threads waiting on the latch 
-  can proceed.
+1.  Initialization: You initialize a CountDownLatch with a given count. This count is the number of times the countDown() method must be invoked before the threads waiting on the 
+     latch can proceed.
+2.  Waiting: Threads call the await() method on the latch to wait until the count reaches zero.
+3.  Counting Down: Other threads call the countDown() method to decrease the count. When the count reaches zero, all waiting threads are released.
 
-* Waiting: Threads call the await() method on the latch to wait until the count reaches zero.
+USE CASE :
 
-* Counting Down: Other threads call the countDown() method to decrease the count. When the count reaches zero, all waiting threads are released.
+-  Starting Multiple Threads at the Same Time: You can use a CountDownLatch to ensure that multiple threads start executing at the same time. This is useful in performance testing 
+   where you want to simulate concurrent user activity.
+-  Waiting for Multiple Threads to Complete: If you have a main thread that needs to wait for several worker threads to complete their tasks before proceeding, a CountDownLatch can 
+   be used to block the main thread until all worker threads have finished.
+-  Dividing a Task Among Multiple Threads: When a large task can be divided into smaller subtasks that can be executed in parallel, you can use a CountDownLatch to wait for all 
+   subtasks to complete before combining the results.
+-  Deadlock Detection: In complex systems, CountDownLatch can help in detecting deadlocks by ensuring that certain operations are completed before others start.
+-  Resource Initialization: If multiple threads need to wait for a resource to be initialized before they can proceed, a CountDownLatch can be used to block the threads until the 
+   resource is ready.
 
 ```
 
