@@ -941,3 +941,92 @@ This call is synchronous and the thread calling this method suspends execution t
 Optionally, we can pass the second argument to the constructor, which is a Runnable instance. This has logic that would be run by the last thread that trips the barrier:
 public CyclicBarrier(int parties, Runnable barrierAction)
 
+##  Scenario: Multi-Phase Computation
+
+Imagine we have a large dataset that needs to be processed in multiple phases. Each phase involves some computation, and all threads must synchronize at the end of each phase before moving on to the next phase.
+1. Initialize the CyclicBarrier: Create a CyclicBarrier with the number of threads and a barrier action.
+2. Divide the Task: Split the dataset into smaller chunks, each to be processed by a separate thread.
+3. Process the Data in Phases: Each thread processes its chunk in multiple phases, synchronizing at the end of each phase.
+4. Barrier Action: Define a barrier action to be executed at the end of each phase when all thread reach to barrier to be executed by last thread
+
+```
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+
+public class MultiPhaseComputationExample {
+    public static void main(String[] args) {
+        int numberOfThreads = 4;
+        int numberOfPhases = 3;
+        List<Integer> data = generateData(1000); // Generate a list of 1000 numbers
+        CyclicBarrier barrier = new CyclicBarrier(numberOfThreads, new BarrierAction());
+
+        for (int i = 0; i < numberOfThreads; i++) {
+            int start = i * (data.size() / numberOfThreads);
+            int end = (i == numberOfThreads - 1) ? data.size() : start + (data.size() / numberOfThreads);
+            List<Integer> sublist = data.subList(start, end);
+            new Thread(new Worker(sublist, barrier, numberOfPhases)).start();
+        }
+    }
+
+    private static List<Integer> generateData(int size) {
+        List<Integer> data = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            data.add(i + 1);
+        }
+        return data;
+    }
+}
+
+class Worker implements Runnable {
+    private final List<Integer> data;
+    private final CyclicBarrier barrier;
+    private final int numberOfPhases;
+
+    Worker(List<Integer> data, CyclicBarrier barrier, int numberOfPhases) {
+        this.data = data;
+        this.barrier = barrier;
+        this.numberOfPhases = numberOfPhases;
+    }
+
+    @Override
+    public void run() {
+        try {
+            for (int phase = 1; phase <= numberOfPhases; phase++) {
+                processPhase(phase);
+                System.out.println(Thread.currentThread().getName() + " completed phase " + phase);
+                barrier.await(); // Wait for other threads to complete the phase
+            }
+        } catch (InterruptedException | BrokenBarrierException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void processPhase(int phase) {
+        // Simulate some work for the phase
+        for (int i = 0; i < data.size(); i++) {
+            data.set(i, data.get(i) + phase);
+        }
+    }
+}
+
+class BarrierAction implements Runnable {
+    @Override
+    public void run() {
+        System.out.println("All threads have reached the barrier. Proceeding to the next phase.");
+    }
+}
+
+Explanation:
+Data Generation: The generateData method creates a list of integers from 1 to 1000.
+Task Division: The data is divided into sublists, each assigned to a worker thread.
+Worker Threads: Each worker thread processes its sublist in multiple phases. After each phase, the thread calls barrier.await() to wait for other threads.
+Barrier Action: The BarrierAction class defines an action that is executed once all threads have reached the barrier at the end of each phase.
+Key Points
+Reusability: The CyclicBarrier is reused for each phase, making it suitable for multi-phase computations.
+Synchronization: All threads must reach the barrier before any of them can proceed to the next phase.
+Barrier Action: The barrier action provides a way to perform additional operations once all threads have synchronized.
+
+```
+
