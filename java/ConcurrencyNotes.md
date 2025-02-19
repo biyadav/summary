@@ -996,7 +996,8 @@ class Worker implements Runnable {
             for (int phase = 1; phase <= numberOfPhases; phase++) {
                 processPhase(phase);
                 System.out.println(Thread.currentThread().getName() + " completed phase " + phase);
-                barrier.await(); // Wait for other threads to complete the phase
+                barrier.await(); // Wait for other threads reach the barrier
+                System.out.println(" ");
             }
         } catch (InterruptedException | BrokenBarrierException e) {
             e.printStackTrace();
@@ -1015,6 +1016,7 @@ class BarrierAction implements Runnable {
     @Override
     public void run() {
         System.out.println("All threads have reached the barrier. Proceeding to the next phase.");
+     // We can use to combine results of all thread which they put to some concurrent collection at the end of each phase 
     }
 }
 
@@ -1023,7 +1025,8 @@ Data Generation: The generateData method creates a list of integers from 1 to 10
 Task Division: The data is divided into sublists, each assigned to a worker thread.
 Worker Threads: Each worker thread processes its sublist in multiple phases. After each phase, the thread calls barrier.await() to wait for other threads.
 Barrier Action: The BarrierAction class defines an action that is executed once all threads have reached the barrier at the end of each phase.
-Key Points
+
+Key Points:
 Reusability: The CyclicBarrier is reused for each phase, making it suitable for multi-phase computations.
 Synchronization: All threads must reach the barrier before any of them can proceed to the next phase.
 Barrier Action: The barrier action provides a way to perform additional operations once all threads have synchronized.
