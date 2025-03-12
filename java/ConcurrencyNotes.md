@@ -1039,6 +1039,25 @@ Atomic classes provide classes to read and write atomically, and also contains a
 * AtomicBoolean  * AtomicInteger  * AtomicLong * AtomicReference * AtomicIntegerArray * AtomicLongArray * AtomicReferenceArray
 
 
-# java.util.concurrent.atomic.AtomicBoolean
+### java.util.concurrent.atomic.AtomicBoolean
+AtomicBoolean atomicBoolean = new AtomicBoolean();  initial value false
+AtomicBoolean atomicBoolean = new AtomicBoolean(true); initial true
+boolean value = atomicBoolean.get();
+atomicBoolean.set(false);
+
+Swapping Atomic values 
+AtomicBoolean atomicBoolean = new AtomicBoolean(true);
+boolean oldValue = atomicBoolean.getAndSet(false);
+
+Compare and Set 
+AtomicBoolean atomicBoolean = new AtomicBoolean(true);
+
+boolean expectedValue = true;
+boolean newValue      = false;
+boolean wasNewValueSet = atomicBoolean.compareAndSet( expectedValue, newValue);  compares the current value of the AtomicBoolean to true and if the two values are equal, sets the new value of the AtomicBoolean to false .
+
+
+
+
 
 
