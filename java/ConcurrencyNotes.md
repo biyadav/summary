@@ -1072,3 +1072,16 @@ addAndGet(n)  first add return addedValue
 getAndAdd(n)  first return then add 
 getAndIncrement()  return current value and increment by 1
 incrementAndGet()   increment by 1 and the return incremented value
+
+## java.util.concurrent.atomic.AtomicReference
+The AtomicReference class provides an object reference variable which can be read and written atomically which means if multiple threads attemp to set the reference it will not be in inconsistent state
+
+AtomicReference atomicReference = new AtomicReference();
+String initialReference = "the initially referenced string";
+AtomicReference atomicReference = new AtomicReference(initialReference);
+String reference = (String) atomicReference.get();
+
+AtomicReference<String> atomicStringReference = new AtomicReference<String>();
+String initialReference = "the initially referenced string";
+AtomicReference<String> atomicStringReference = new AtomicReference<String>(initialReference);
+String reference = atomicReference.get();
