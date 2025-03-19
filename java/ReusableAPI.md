@@ -42,3 +42,7 @@ Integer.sum(int x,int y)
 ```
 
 Comparator c= String.CASE_INSENSITIVE_ORDER
+
+##  Regex 
+
+single whitespace   "\\s"    multiple whitespaces //s+     tab  \t
