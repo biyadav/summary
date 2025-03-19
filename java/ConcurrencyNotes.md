@@ -1056,8 +1056,19 @@ boolean expectedValue = true;
 boolean newValue      = false;
 boolean wasNewValueSet = atomicBoolean.compareAndSet( expectedValue, newValue);  compares the current value of the AtomicBoolean to true and if the two values are equal, sets the new value of the AtomicBoolean to false .
 
+###  java.util.concurrent.atomic.AtomicInteger
 
+AtomicInteger atomicInteger = new AtomicInteger(); initial value 0 
+AtomicInteger atomicInteger = new AtomicInteger(123);initial value 123
+int theValue = atomicInteger.get(); retrun 123
+atomicInteger.set(234); // set value to 234
 
+AtomicInteger atomicInteger = new AtomicInteger(123);
+int expectedValue = 123;
+int newValue      = 234;
+atomicInteger.compareAndSet(expectedValue, newValue);
 
-
-
+addAndGet(n)  first add return addedValue
+getAndAdd(n)  first return then add 
+getAndIncrement()  return current value and increment by 1
+incrementAndGet()   increment by 1 and the return incremented value
