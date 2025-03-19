@@ -45,5 +45,8 @@ Comparator c= String.CASE_INSENSITIVE_ORDER
 
 ##  Regex 
 ```
-single whitespace   "\\s"    multiple whitespaces "\\s+"     tab  "\t"
+single whitespace   "\\s"    multiple whitespaces "\\s+"     tab  "\t"  The 's' replaces one space match at a time but the 's+' replaces the whole space sequence at once with the second parameter
+String x = "Text   With     Whitespaces!   ";
+x.replaceAll("\\s", "_");   "Text___With_____Whitespaces!___"
+x.replaceAll("\\s+", "_");  "Text_With_Whitespaces!_"
 ```
