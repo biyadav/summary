@@ -1,3 +1,5 @@
+https://www.cloudtechtwitter.com/2023/09/deep-dive-into-kubeproxy-unraveling-its.html
+
 https://archive.is/h5aP6   java 8 example
 
 https://medium.com/@ketan.patel_46870/my-interview-experience-for-software-architect-java-position-4dc6dda35d9c
