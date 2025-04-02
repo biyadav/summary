@@ -1,5 +1,7 @@
 https://akcoding.medium.com/scenario-based-multithreading-interview-questions-crack-your-next-java-interview-ee993071c6ef
 
+https://akcoding.com/java-tutorial/
+
 https://www.cloudtechtwitter.com/2023/09/deep-dive-into-kubeproxy-unraveling-its.html
 
 https://archive.is/h5aP6   java 8 example
