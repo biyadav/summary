@@ -6,6 +6,8 @@ https://medium.com/@ketan.patel_46870/my-interview-experience-for-software-archi
 
 https://medium.com/@amitvsolutions/java-summary-a-comprehensive-review-and-recap-995c4cb0b117
 
+https://archive.is/q2XZ3#selection-2357.0-2357.37
+
 https://medium.com/@amitvsolutions/java-8-workshop-on-lambdas-and-streams-162feb1e4184
 
 https://javatechonline.com/java-8-coding-interview-questions-java/
