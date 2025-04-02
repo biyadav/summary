@@ -1,6 +1,10 @@
+https://akcoding.medium.com/scenario-based-multithreading-interview-questions-crack-your-next-java-interview-ee993071c6ef
+
 https://www.cloudtechtwitter.com/2023/09/deep-dive-into-kubeproxy-unraveling-its.html
 
 https://archive.is/h5aP6   java 8 example
+
+https://akcoding.medium.com/java-technical-lead-interview-questions-for-10-years-experience-e7f5d8ec530f
 
 https://medium.com/@ketan.patel_46870/my-interview-experience-for-software-architect-java-position-4dc6dda35d9c
 
