@@ -60,3 +60,17 @@ Map.Entry<String, Long> maxNoOfEmployeesInDept = empList.stream().collect(Collec
                                                  entrySet().stream().max(Map.Entry.comparingByValue()).get();
 System.out.println("Max no of employees present in Dept :: " + maxNoOfEmployeesInDept.getKey());
 ```
+
+```
+OptionalInt max = empList.stream().mapToInt(Employee::getAge).max();
+if (max.isPresent()) 
+System.out.println("Maximum age of Employee: " + max.getAsInt());
+
+```
+```
+
+Map<String, Double> avgAge = empList.stream().collect(Collectors.groupingBy
+                             (Employee::getGender,Collectors.averagingInt
+                              Employee::getAge)));
+System.out.println("Average age of Male and Female Employees:: " + avgAge);
+```
