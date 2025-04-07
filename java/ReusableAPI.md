@@ -50,3 +50,13 @@ String x = "Text   With     Whitespaces!   ";
 x.replaceAll("\\s", "_");   "Text___With_____Whitespaces!___"
 x.replaceAll("\\s+", "_");  "Text_With_Whitespaces!_"
 ```
+
+## Stream 
+
+```
+map.entrySet().stream().max(Map.Entry.comparingByValue()) // having map find max min on map value   
+
+Map.Entry<String, Long> maxNoOfEmployeesInDept = empList.stream().collect(Collectors.groupingBy(Employee::getDeptName, Collectors.counting())).
+                                                 entrySet().stream().max(Map.Entry.comparingByValue()).get();
+System.out.println("Max no of employees present in Dept :: " + maxNoOfEmployeesInDept.getKey());
+```
