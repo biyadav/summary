@@ -3,4 +3,4 @@ https://medium.com/@sylvain.tiset/top-10-microservices-design-patterns-you-shoul
 
 
 
-For @Configuration classes  need to add in src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports  with full  qualifiedname without extension
+For @Configuration/ @AutoConfiguration  classes  need to add in folder src/main/resources/META-INF/spring/ in  file  org.springframework.boot.autoconfigure.AutoConfiguration.imports  with full  qualifiedname without extension
