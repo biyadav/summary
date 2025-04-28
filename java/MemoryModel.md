@@ -20,6 +20,23 @@
 		○ Grows dynamically based on the application’s needs.
 		○ Configurable using -XX:MetaspaceSize and -XX:MaxMetaspaceSize.
 
+## Class Loader 
+
+ClassLoader loads the classes dynamically into memory whenever required by Java
+Runtime Environment.
+ClassLoader is an abstract class in Java Runtime Environment.
+There are three types of class loaders available in java.
+
+a. BootStrap Class Loader (Primordial ClassLoader):
+    This is a parent loader of all existing loaders. Bootstrap loaders load all JDK files
+    from jre/lib/rt.jar.
+b. Extension Class Loader :
+   Extension class loader loads the extensions of java core classes from jre/lib/ext
+   directory. Extension class loader is a child loader of Bootstrap class loader.
+c. System Class Loader :
+   System class loader loads the application level classes. System class loader is a
+  child loader of Extension class loader
+
 ## Garbage Collection (GC) and Tuning
     Garbage Collection in Java is responsible for reclaiming memory by removing unused objects. 
     GC algorithms and configurations are critical for performance.
