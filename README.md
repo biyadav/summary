@@ -1,10 +1,10 @@
 ************JAVA **************************
- Java 8 features  
- Features in version
- Concurrency 
- Memory management & GC 
- Collection 
- Useful Library list 
+ *Java 8 features  
+ *Features in version
+ *Concurrency 
+ *Memory management & GC 
+ *Collection 
+ *Useful Library list 
  
 ************ Kafka **************************
 Use 
