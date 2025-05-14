@@ -78,7 +78,12 @@ c. System Class Loader :
 
 ## GC Logs and Monitoring
 * Enable GC logging for performance analysis:
-   -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:gc.log
+   -XX:+PrintGC   enables basic GC logging, showing when a garbage collection event occurs and providing a summary of memory usage before and after the collection.
+   -XX:+PrintGCDetails detailed information about each GC event, including specifics about different generations
+       (Young, Old, and Metaspace), the type of GC algorithm used, and finer details about memory allocation and reclamation.
+   -XX:-HeapDumpOnOutOfMemoryError: Create a thread dump when the application runs out of memory.
+   -XX:+PrintGCTimeStamps
+   -Xloggc:gc.log    JVM option redirects garbage collection (GC) logs to a specified file (gc.log).
 
 * Heap Configuration Options
 	1. Heap Size:
