@@ -23,7 +23,26 @@ Optional<Path> p = uris. stream().filter(uri -> !isProcessedYet(uri))
 
 ```
 
+##  Infinite Streams 
 
+```
+
+Stream<Integer> infiniteStream = Stream.iterate(0, i -> i + 2);
+List<Integer> collect = infiniteStream
+  .limit(10)
+  .collect(Collectors.toList());  0 to 18
+
+
+For custome Type
+Supplier<UUID> randomUUIDSupplier = UUID::randomUUID;
+Stream<UUID> infiniteStreamOfRandomUUID = Stream.generate(randomUUIDSupplier);
+
+```
+## Do-While – the Stream Way
+  Stream<Integer> integers = Stream
+   .iterate(0, i -> i + 1).integers.limit(10).forEach(System.out::println);
+
+  IntStream.range(1, 6).forEach(i -> System.out.println("Iteration: " + i));
 
 ##  java.util.stream.Collectors  default method 
 
@@ -63,4 +82,5 @@ collect in a Set	      toSet()	Collects stream elements in a Set
 collect and transform	  collectingAndThen()	Collects stream elements and then transforms them using a Function
 
 
+## Way to create  Streams 
 
