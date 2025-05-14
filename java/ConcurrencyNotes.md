@@ -139,6 +139,13 @@ You’re working with concurrency utilities like Future.
 
 ```
 
+<h5>  Extending Thread Vs implementing Runnable  </h5>
+ 
+Java doesn’t have multiple inheritance so this option will limit your ability to extend anything else.
+More importantly, it’s just not a very pretty way of doing it. As good developers we aim to favour composition
+over inheritance.Also it seperate the task which needs to be executed from  the class maintaining thread life cycle .
+A thread implementation is more related to how to start a new thread instead of mixing the task logic .
+
 java.util.concurrent package was added to Java 5.
 
 
