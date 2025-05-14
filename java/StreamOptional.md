@@ -1,4 +1,5 @@
 # java.util.Optional
+
 ```
 A container object which may or may not contain a non-null value. If a value is present, isPresent() returns true. 
 If no value is present, the object is considered empty and isPresent() returns false.orElse() (returns a default value if no value is present)
@@ -85,7 +86,7 @@ Employee highestPaidEmployee = employees.stream()
     .collect(Collectors.collectingAndThen(
         Collectors.maxBy(Comparator.comparing(Employee::getSalary)),
         Optional::get
-    ));   we collected the optional and then executed fuction to get the employee
+    ));   we collected the max salary employee in  optional and then executed fuction to get the employee
 
 ## Why Use collectingAndThen?
 Post-process collected results (e.g., first collect to a list and then converting a list to an immutable list).
@@ -94,7 +95,7 @@ Ensure transformations after collection (e.g., collect max or min to optional th
 
 Enhance readability by chaining operations.
 
-## Way to create  Streams 
+## Ways to create  Streams 
 
 
 From Collections ::  
