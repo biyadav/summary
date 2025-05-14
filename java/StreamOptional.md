@@ -84,3 +84,6 @@ collect and transform	  collectingAndThen()	Collects stream elements and then tr
 
 ## Way to create  Streams 
 
+IntStream  intStream = IntStream.of(1, 2, 3, 4);
+
+
