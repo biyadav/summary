@@ -85,28 +85,28 @@ collect and transform	  collectingAndThen()	Collects stream elements and then tr
 ## Way to create  Streams 
 
 
-From Collections 
+From Collections ::  
 List<String> names = List.of("Alice", "Bob", "Charlie");
 Stream<String> nameStream = names.stream();
 
-From Arrays 
+From Arrays  ::  
 String[] cities = {"Mumbai", "Delhi", "Bangalore"};
 Stream<String> cityStream = Arrays.stream(cities);
 
-Using Stream.of
+Using Stream.of ::  
 Stream<Integer> numberStream = Stream.of(1, 2, 3, 4, 5);
 IntStream  intStream = IntStream.of(1, 2, 3, 4);
 
-Using Stream.generate
+Using Stream.generate :: 
 Stream<Double> randomStream = Stream.generate(Math::random).limit(5);
 
-Infinite Stream with iteration 
+Infinite Stream with iteration  :: 
 Stream<Integer> evenNumbers = Stream.iterate(0, n -> n + 2).limit(5);
 
-From Files 
+From Files  :: 
 Stream<String> fileStream = Files.lines(Paths.get("data.txt"));
 
-Empty String 
+Empty String ::
 Stream<String> emptyStream = Stream.empty();
 
 
