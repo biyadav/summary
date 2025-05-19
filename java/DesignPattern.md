@@ -423,6 +423,3 @@ turnOff.execute();
 Key Takeaway
 * By mastering design patterns, you can solve complex design problems effectively and write clean, maintainable, and reusable code.
 * Each pattern serves a specific purpose, and the right choice depends on the use case.
-
-
-![image](https://github.com/user-attachments/assets/d1f766b4-4953-4b85-80db-9b9d6fca862a)
