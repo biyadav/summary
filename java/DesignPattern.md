@@ -2,9 +2,9 @@
 
 Design patterns are established solutions to recurring design problems in software development. They provide templates for building robust,
 maintainable, and scalable systems. Design patterns are categorized into three types:
-	1. Creational Patterns - Deal with object creation. Singleton,Factory Pattern  ,Builder Pattern ,Prototype Pattern
-	2. Structural Patterns - Deal with object composition. Decorator Pattern ,Adapter Pattern
-	3. Behavioral Patterns - Deal with communication between objects. Observer Pattern ,Command Pattern,Strategy Pattern
+	*  Creational Patterns - Deal with object creation. Singleton,Factory Pattern  ,Builder Pattern ,Prototype Pattern
+	*  Structural Patterns - Deal with object composition. Decorator Pattern ,Adapter Pattern
+	*  Behavioral Patterns - Deal with communication between objects. Observer Pattern ,Command Pattern,Strategy Pattern
 
 ## 1. Singleton Pattern (Creational)
 Ensures that a class has only one instance and provides a global access point to it.
