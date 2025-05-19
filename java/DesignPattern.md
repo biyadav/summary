@@ -9,6 +9,7 @@ maintainable, and scalable systems. Design patterns are categorized into three t
 ## 1. Singleton Pattern (Creational)
 Ensures that a class has only one instance and provides a global access point to it.
 
+```
 import java.util.Objects;
 public class Singleton {
     private static Singleton instance;
@@ -30,9 +31,12 @@ public void showMessage() {
     }
 }
 
+```
+
 ## 2. Factory Pattern (Creational)
 Provides an interface for creating objects but allows subclasses to alter the type of objects that will be created.
 
+```	
 import java.util.HashMap;
 import java.util.Map;
 interface Shape {
@@ -59,14 +63,17 @@ class ShapeFactory {
         };
     }
 }
-Usage:
 
+Usage:
 Shape shape = ShapeFactory.getShape("circle");
 shape.draw();
+
+```
 
 ## 3. Builder Pattern (Creational)
 Separates the construction of a complex object from its representation, allowing the same construction process to create different representations.
 
+```
 class Car {
     private String engine;
     private int wheels;
@@ -109,9 +116,12 @@ Car car = new Car.Builder()
         .build();
 System.out.println(car);
 
+```
+
 ## 4. Prototype Pattern (Creational)
 Allows cloning of objects without coupling to their specific classes.
 
+```
 interface Prototype extends Cloneable {
     Prototype clone();
 }
@@ -140,10 +150,14 @@ ConcretePrototype clone = (ConcretePrototype) original.clone();
 System.out.println(original);
 System.out.println(clone);
 
+```
+
 
 ## 5. Decorator Pattern (Structural)
+
 Allows behavior to be added to an object dynamically.
 
+```
 interface Coffee {
     String getDescription();
     double getCost();
@@ -190,11 +204,12 @@ Usage:
 
 Coffee coffee = new SugarDecorator(new MilkDecorator(new BasicCoffee()));
 System.out.println(coffee.getDescription() + ": $" + coffee.getCost());
-
+```
 
 ## 6. Adapter Pattern (Structural)
 Allows incompatible interfaces to work together by wrapping an object with a compatible interface.
 
+```
 interface MediaPlayer {
     void play(String audioType, String fileName);
 }
@@ -225,9 +240,13 @@ Usage:
 MediaPlayer player = new MediaAdapter("mp4");
 player.play("mp4", "example.mp4");
 
+```
+
 ## 7. Composite Pattern (Structural)
 Composes objects into tree structures to represent part-whole hierarchies. Allows clients to treat individual objects and compositions uniformly.
 
+
+```
 import java.util.ArrayList;
 import java.util.List;
 interface Component {
@@ -266,11 +285,12 @@ Composite composite = new Composite();
 composite.add(leaf1);
 composite.add(leaf2);
 composite.showDetails();
-
+```
 
 ## 8. Observer Pattern (Behavioral)
 Defines a one-to-many dependency between objects, so that when one object changes state, all its dependents are notified.
 
+```
 import java.util.ArrayList;
 import java.util.List;
 interface Observer {
@@ -309,6 +329,7 @@ subject.addObserver(observer1);
 subject.addObserver(observer2);
 subject.notifyObservers("Hello Observers!");
 
+```
 Advantages of Design Patterns
 	• Promote code reusability and readability.
 	• Provide best practices for problem-solving.
@@ -318,6 +339,7 @@ Mastering these patterns can significantly improve your ability to write clean, 
 ## 9. Strategy Pattern (Behavioral)
 Defines a family of algorithms, encapsulates each one, and makes them interchangeable.
 
+```
 interface PaymentStrategy {
     void pay(int amount);
 }
@@ -349,10 +371,12 @@ context.setStrategy(new CreditCardPayment());
 context.executePayment(100);
 context.setStrategy(new PayPalPayment());
 context.executePayment(200);
+```
 
 ## 10. Command Pattern (Behavioral)
 Encapsulates a request as an object, thereby allowing parameterization of clients with queues, requests, and operations.
 
+```
 interface Command {
     void execute();
 }
@@ -394,9 +418,11 @@ Command turnOff = new TurnOffCommand(light);
 turnOn.execute();
 turnOff.execute();
 
+```
+
 Key Takeaway
-By mastering design patterns, you can solve complex design problems effectively and write clean, maintainable, and reusable code.
-Each pattern serves a specific purpose, and the right choice depends on the use case.
+* By mastering design patterns, you can solve complex design problems effectively and write clean, maintainable, and reusable code.
+* Each pattern serves a specific purpose, and the right choice depends on the use case.
 
 
 ![image](https://github.com/user-attachments/assets/d1f766b4-4953-4b85-80db-9b9d6fca862a)
