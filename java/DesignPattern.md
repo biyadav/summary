@@ -1,4 +1,4 @@
-### Design Patterns in Java
+### Design Patterns in Java    https://jaykay12.github.io/tech/design-patterns/
 
 Design patterns are established solutions to recurring design problems in software development. They provide templates for building robust,
 maintainable, and scalable systems. Design patterns are categorized into three types:
