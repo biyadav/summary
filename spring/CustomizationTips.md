@@ -1,6 +1,6 @@
 ### Error Handling in Spring 
 
-ExceptionHandler:  is a Spring annotation that provides a mechanism to treat exceptions thrown during execution of handlers (controller operations).
+@ExceptionHandler:  is a Spring annotation that provides a mechanism to treat exceptions thrown during execution of handlers (controller operations).
 This annotation, if used on methods of controller classes, will serve as the entry point for handling exceptions thrown within this controller only.
 ResponseEntityExceptionHandler
 
@@ -17,7 +17,7 @@ public class FooController {
 }
 ```
 
-ControllerAdvice is an annotation in Spring and, as the name suggests, is “advice” for multiple controllers. It enables the application of a single ExceptionHandler to multiple controllers.
+@ControllerAdvice is an annotation in Spring and, as the name suggests, is “advice” for multiple controllers. It enables the application of a single ExceptionHandler to multiple controllers.
 The subset of controllers affected can be defined by using the following selectors on @ControllerAdvice: annotations(), basePackageClasses(), and basePackages(). ControllerAdvice is applied
 globally to all controllers if no selectors are provided
 
@@ -31,7 +31,8 @@ public class MyGlobalExceptionHandler {
     }
 }
 ```
-ResponseEntityExceptionHandler: 
+
+Extending  class ResponseEntityExceptionHandler: 
 A convenient base class for @ControllerAdvice classes that wish to provide centralized exception handling across all @RequestMapping methods through @ExceptionHandler methods.
 This base class provides an @ExceptionHandler for handling standard Spring MVC exceptions that returns a ResponseEntity to be written with message converters. 
 This is in contrast to DefaultHandlerExceptionResolver which returns a ModelAndView instead.
