@@ -1,6 +1,6 @@
 https://towardsdev.com/30-days-of-spring-boot-day-25-interceptors-and-filters-6daba225f37c
 
-
+https://medium.com/@gaddamnaveen192/spring-boot-interview-prep-300-questions-and-real-world-challenges-explained-c1f5ab7bb4b1
 https://medium.com/@sylvain.tiset/top-10-microservices-design-patterns-you-should-know-1bac6a7d6218
 
 https://www.springcloud.io/post/2023-06/spring-boot-annotation/#gsc.tab=0
