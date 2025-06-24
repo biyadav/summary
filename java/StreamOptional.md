@@ -2,8 +2,8 @@
 
 ```
 A container object which may or may not contain a non-null value. If a value is present, isPresent() returns true. 
-If no value is present, the object is considered empty and isPresent() returns false.orElse() (returns a default value if no value is present)
-and ifPresent() (performs an action if a value is present).
+If no value is present, the object is considered empty and isPresent() returns false.   orElse(returns a default value if no value is present)
+and ifPresent(performs an action if a value is present).
 
 Optional.empty()   return  Optional.EMPTY  use when to wrap null .
 public static <T> Optional<T> of(T value)   throws NPE if value is null
