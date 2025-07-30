@@ -156,7 +156,9 @@ class Solution {
 }
 ```
 
-Second way: chanage the number at position = currentNumber-1  . So if index idx is positive it means idx+1 was not in arary so item at idx was not changed to -ve.
+Second way: chanage the number at position = currentNumber-1  to negative if positive . 
+negative only if currently it is positive is must not to make positive  due to even appearnces .
+So if index idx is positive it means idx+1 was not in arary so item at idx was not changed to -ve.
 
 ```
 class Solution {
