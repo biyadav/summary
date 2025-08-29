@@ -1,4 +1,11 @@
 
+https://github.com/anhthii/kafka-notes  
+
+https://github.com/saptarshibasu/kafka-study  
+
+https://github.com/ayushdixit487/CCDAK-Exam-Notes/blob/master/Kafka%20Architecture/Kafka%20Architecture.txt
+
+
 https://kafkarealtimedata.blogspot.com/2024/11/unlocking-power-of-real-time-data-your.html  
 
 [https://medium.com/@durgaswaroop/a-practical-introduction-to-kafka-storage-internals-d5b544f6925f]  
