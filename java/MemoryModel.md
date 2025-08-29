@@ -80,6 +80,12 @@ Jprofiler  or online tool fastThread to analyze thread dump
 5.Programmatic Dump via JMX
     You can trigger a heap dump from within your app using HotSpotDiagnosticMXBean
 
+## Analyze Heap dump 
+
+Eclipse MAT (Memory Analyzer Tool): Powerful for leak detection
+JVisualVM: Good for quick inspection
+YourKit or JProfiler: Commercial profilers with advanced features
+
 ## Garbage Collection Algorithms
 	1. Serial GC (-XX:+UseSerialGC):
 		○ Single-threaded GC.
