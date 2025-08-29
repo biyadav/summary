@@ -62,6 +62,24 @@ c. System Class Loader :
 
 Jprofiler  or online tool fastThread to analyze thread dump
 
+## Capture a Heap Dump
+
+1. Using jmap (Command Line Tool)
+     jmap -dump:live,format=b,file=/path/to/dump.hprof <PID>
+2. Using jcmd
+     jcmd <PID> GC.heap_dump /path/to/dump.hprof
+3. Using JVisualVM (GUI Tool)
+      Launch jvisualvm from your JDK bin directory
+      Connect to your running Java process
+      Right-click → Heap Dump
+      View and analyze directly or export as .hprof
+4. Automatic Dump on OutOfMemoryError
+    -XX:+HeapDumpOnOutOfMemoryError
+    -XX:HeapDumpPath=/path/to/dump.hprof
+
+5.Programmatic Dump via JMX
+    You can trigger a heap dump from within your app using HotSpotDiagnosticMXBean
+
 ## Garbage Collection Algorithms
 	1. Serial GC (-XX:+UseSerialGC):
 		○ Single-threaded GC.
