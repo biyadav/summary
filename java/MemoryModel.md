@@ -41,6 +41,26 @@ c. System Class Loader :
 ## Garbage Collection (GC) and Tuning
     Garbage Collection in Java is responsible for reclaiming memory by removing unused objects. 
     GC algorithms and configurations are critical for performance.
+	
+ -XX:MaxGCPauseMillis=<ms>	Target max GC pause time	Start with 200–500ms depending on latency needs
+ -Xlog:gc*:file=gc.log:time,uptime,level,tags   enable GC 
+ -XX:ParallelGCThreads	Threads for parallel GC	Set based on CPU cores (default is usually fine)
+ -XX:ConcGCThreads	Threads for concurrent GC	Also based on CPU cores; default is adaptive
+
+## Take thread dump
+1. command line  jstack <PID> > thread-dump.txt  PID  can be found  jps -l
+2. kill -3 <PID>
+3. Using jvisualvm (GUI Tool)
+    Launch jvisualvm (comes with JDK).
+    Connect to your Java process.
+    Right-click → Thread Dump.
+4. Using Java Mission Control (JMC)
+    Start JMC (bundled with JDK).
+    Connect to the JVM.
+    Use Flight Recorder to capture thread activity.
+5.  expose JMX and connect via JVisualVM or JMC remotely
+
+Jprofiler  or online tool fastThread to analyze thread dump
 
 ## Garbage Collection Algorithms
 	1. Serial GC (-XX:+UseSerialGC):
