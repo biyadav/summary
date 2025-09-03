@@ -1,4 +1,5 @@
 
+https://github.com/lokeshgupta1981/generative-ai-for-beginners?tab=readme-ov-file  
 https://levelup.gitconnected.com/building-a-complex-production-ready-rag-system-with-langchain-langgraph-and-ragas-36a66d663c5c  
  
 https://medium.com/@vipra_singh/ai-agents-agentic-rag-part-10-f1f7d6d5c8a9  
@@ -7,8 +8,6 @@ https://github.com/FareedKhan-dev/complex-RAG-guide
 
 https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/rag/rag-generate-embeddings  
 https://devblogs.microsoft.com/java/the-state-of-coding-the-future-with-java-and-ai/  
-
-
 https://moaw.dev/workshop/?src=gh:Azure-Samples/azure-openai-rag-workshop-java/docs/workshop-java-quarkus.md  
 https://github.com/Azure-Samples/azure-openai-rag-workshop-java?tab=readme-ov-file  
 https://learn.microsoft.com/en-gb/training/modules/build-enterprise-ai-agents-with-java-spring/  
