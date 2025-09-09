@@ -27,10 +27,11 @@
 java.util.stream.Collectors  is a utility class that provides various implementations of reduction operations such as grouping elements,  
 collecting elements to different collections, summarizing elements according to various criteria, etc.  
 The different functionalities in the Collectors class are usually used as the final operations on streams.  
+
+  ```
  // Accumulate names into a List  List<String> list = people.stream().map(Person::getName).collect(Collectors.toList());  
-    
-// Accumulate names into a TreeSet  Set<String> set = people.stream().map(Person::getName).collect(Collectors.toCollection(TreeSet::new));  
-// Convert elements to strings and concatenate them, separated by commas  
+ // Accumulate names into a TreeSet  Set<String> set = people.stream().map(Person::getName).collect(Collectors.toCollection(TreeSet::new));  
+ // Convert elements to strings and concatenate them, separated by commas  
        String joined = things.stream().map(Object::toString).collect(Collectors.joining(", "));  
        String joined = things.stream().map(Object::toString).collect(Collectors.joining(", "[","]"));  // delemeter , prefix, suffix
        Map<BlogPostType, String> postsPerType = posts.stream()  
@@ -86,7 +87,7 @@ List<Integer> list = Stream.of(12, 13, 14, 15)
     );  
 
 
-  ```
+
    public static <T, U, A, R>   Collector<T, ?, R> mapping(Function<? super T, ? extends U> mapper,
                                     Collector<? super U, A, R> downstream)     mapping(function , toCollection())
    Adapts a Collector accepting elements of type U to one accepting elements of type T by applying a mapping function to each input 
