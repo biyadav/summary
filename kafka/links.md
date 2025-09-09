@@ -3,6 +3,8 @@ https://github.com/anhthii/kafka-notes
 
 https://github.com/saptarshibasu/kafka-study  
 
+https://github.com/grafino/kafka-certification  
+
 https://github.com/ayushdixit487/CCDAK-Exam-Notes/blob/master/Kafka%20Architecture/Kafka%20Architecture.txt
 
 
