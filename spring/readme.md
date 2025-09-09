@@ -1,11 +1,17 @@
-https://github.com/onsever/spring-framework-notes
+https://github.com/onsever/spring-framework-notes  
 
-https://towardsdev.com/30-days-of-spring-boot-day-25-interceptors-and-filters-6daba225f37c
+https://towardsdev.com/30-days-of-spring-boot-day-25-interceptors-and-filters-6daba225f37c  
 
-https://medium.com/@gaddamnaveen192/spring-boot-interview-prep-300-questions-and-real-world-challenges-explained-c1f5ab7bb4b1
-https://medium.com/@sylvain.tiset/top-10-microservices-design-patterns-you-should-know-1bac6a7d6218
+https://medium.com/@gaddamnaveen192/spring-boot-interview-prep-300-questions-and-real-world-challenges-explained-c1f5ab7bb4b1  
+https://medium.com/@sylvain.tiset/top-10-microservices-design-patterns-you-should-know-1bac6a7d6218  
 
-https://www.springcloud.io/post/2023-06/spring-boot-annotation/#gsc.tab=0
+https://www.springcloud.io/post/2023-06/spring-boot-annotation/#gsc.tab=0  
+
+
+## Spring Security 
+
+https://medium.com/@dilankacm/spring-security-architecture-explained-with-jwt-authentication-example-spring-boot-5cc583a9aeac  
+https://medium.com/@tericcabrel/implement-jwt-authentication-in-a-spring-boot-3-application-5839e4fd8fac  
 
 
 ### Distributed Transactions in Microservices  https://archive.is/3OYwF#selection-591.0-591.525
