@@ -1,5 +1,6 @@
 
 https://github.com/lokeshgupta1981/generative-ai-for-beginners?tab=readme-ov-file  
+https://github.com/microsoft/AI-For-Beginners/tree/main/lessons  
 https://levelup.gitconnected.com/building-a-complex-production-ready-rag-system-with-langchain-langgraph-and-ragas-36a66d663c5c  
  
 https://medium.com/@vipra_singh/ai-agents-agentic-rag-part-10-f1f7d6d5c8a9  
