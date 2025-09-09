@@ -1,3 +1,5 @@
+https://medium.com/@priyasrivastava18official/datastructure-topic-wise-part-1-bfs-and-dfs-139ae98d8995  
+
 https://www.designgurus.io/blog/grokking-the-coding-interview-patterns  
 
 https://javarevisited.blogspot.com/search/label/data%20structure%20and%20algorithm?max-results=3  
