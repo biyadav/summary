@@ -1,4 +1,6 @@
-https://akcoding.medium.com/scenario-based-multithreading-interview-questions-crack-your-next-java-interview-ee993071c6ef
+https://akcoding.medium.com/scenario-based-multithreading-interview-questions-crack-your-next-java-interview-ee993071c6ef  
+
+https://codefarm0.medium.com/scenario-based-java-multithreading-interview-questions-with-a-focus-on-completablefuture-e749bcbb7dbb  
 
 https://akcoding.com/java-tutorial/
 
