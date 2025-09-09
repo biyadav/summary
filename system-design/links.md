@@ -4,7 +4,7 @@ https://levelup.gitconnected.com/system-design-interview-questions-the-ultimate-
 
 https://levelup.gitconnected.com/12-microservices-pattern-i-wish-i-knew-before-the-system-design-interview-5c35919f16a2  
 
-
+https://medium.com/javarevisited/system-design-cheatsheet-4607e716db5a  
 
 https://github.com/ashishps1/awesome-system-design-resources?tab=readme-ov-file
 
