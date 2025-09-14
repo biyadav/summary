@@ -1,59 +1,74 @@
-Apache Kafka Complete Study Guide
-Table of Contents
-Kafka Architecture
-Important Configurations
-Consumer Rebalancing
-Transaction Handling
-Acknowledgments and Delivery Guarantees
-Exactly-Once Semantics
-Idempotency
-Consumer Lag Troubleshooting
-Monitoring
-Advanced Debugging and Troubleshooting
-Performance Tuning
-Best Practices
-Common Use Cases
-Kafka Architecture
-Core Components
-1. Broker
-Definition: A Kafka server that stores and serves data
-Role: Handles producer writes, consumer reads, and replication
-Cluster: Multiple brokers form a Kafka cluster
-Leader/Follower: Each partition has one leader broker and multiple follower brokers
-2. Topics and Partitions
+# Apache Kafka Complete Study Guide
+
+## Table of Contents
+1. [Kafka Architecture](#kafka-architecture)
+2. [Important Configurations](#important-configurations)
+3. [Consumer Rebalancing](#consumer-rebalancing)
+4. [Transaction Handling](#transaction-handling)
+5. [Acknowledgments and Delivery Guarantees](#acknowledgments-and-delivery-guarantees)
+6. [Exactly-Once Semantics](#exactly-once-semantics)
+7. [Idempotency](#idempotency)
+8. [Consumer Lag Troubleshooting](#consumer-lag-troubleshooting)
+9. [Monitoring](#monitoring)
+10. [Advanced Debugging and Troubleshooting](#advanced-debugging-and-troubleshooting)
+11. [Performance Tuning](#performance-tuning)
+12. [Best Practices](#best-practices)
+13. [Common Use Cases](#common-use-cases)
+
+---
+
+## Kafka Architecture
+
+### Core Components
+
+#### 1. Broker
+- **Definition**: A Kafka server that stores and serves data
+- **Role**: Handles producer writes, consumer reads, and replication
+- **Cluster**: Multiple brokers form a Kafka cluster
+- **Leader/Follower**: Each partition has one leader broker and multiple follower brokers
+
+#### 2. Topics and Partitions
+```
 Topic: user-events
 ├── Partition 0: [msg1, msg2, msg3, msg4]
 ├── Partition 1: [msg5, msg6, msg7, msg8]
 └── Partition 2: [msg9, msg10, msg11, msg12]
-Key Concepts:
+```
 
-Topic: Logical category/feed name to which records are published
-Partition: Ordered, immutable sequence of records
-Offset: Unique identifier for each record within a partition
-Retention: How long messages are kept (time or size-based)
-3. Replication
+**Key Concepts:**
+- **Topic**: Logical category/feed name to which records are published
+- **Partition**: Ordered, immutable sequence of records
+- **Offset**: Unique identifier for each record within a partition
+- **Retention**: How long messages are kept (time or size-based)
+
+#### 3. Replication
+```
 Topic: orders (replication-factor=3)
 Partition 0:
 ├── Leader: Broker 1
 ├── Follower: Broker 2 (In-Sync Replica)
 └── Follower: Broker 3 (In-Sync Replica)
-Replication Concepts:
+```
 
-Replication Factor: Number of copies of each partition
-In-Sync Replicas (ISR): Replicas that are caught up with the leader
-Leader Election: Process of choosing new leader when current leader fails
-Unclean Leader Election: Allowing out-of-sync replicas to become leaders
-4. ZooKeeper vs KRaft
-ZooKeeper (Legacy)
+**Replication Concepts:**
+- **Replication Factor**: Number of copies of each partition
+- **In-Sync Replicas (ISR)**: Replicas that are caught up with the leader
+- **Leader Election**: Process of choosing new leader when current leader fails
+- **Unclean Leader Election**: Allowing out-of-sync replicas to become leaders
 
-External dependency for metadata management
-Stores cluster metadata, configuration, and leader election
-Single point of failure and complexity
-KRaft (Kafka Raft) - New Default
+#### 4. ZooKeeper vs KRaft
 
-Self-managed metadata using Raft consensus protocol
-No external ZooKeeper dependency
-Better scalability and simpler operations
+**ZooKeeper (Legacy)**
+- External dependency for metadata management
+- Stores cluster metadata, configuration, and leader election
+- Single point of failure and complexity
+
+**KRaft (Kafka Raft) - New Default**
+- Self-managed metadata using Raft consensus protocol
+- No external ZooKeeper dependency
+- Better scalability and simpler operations
+
+```
 KRaft Architecture:
 Controller Nodes (Metadata management)
 ├── Controller 1 (Leader)
@@ -64,33 +79,43 @@ Broker Nodes (Data storage)
 ├── Broker 1
 ├── Broker 2
 └── Broker 3
-5. Producers
-Producer Workflow:
+```
 
-Serialize key and value
-Determine partition (via partitioner)
-Add to batch for target broker
-Send batch when full or linger time reached
-Receive acknowledgment based on acks setting
-Partitioning Strategies:
+#### 5. Producers
+**Producer Workflow:**
+1. Serialize key and value
+2. Determine partition (via partitioner)
+3. Add to batch for target broker
+4. Send batch when full or linger time reached
+5. Receive acknowledgment based on `acks` setting
 
-Round Robin: Default when no key is provided
-Key-based: Hash of key determines partition
-Custom Partitioner: User-defined partitioning logic
-6. Consumers and Consumer Groups
+**Partitioning Strategies:**
+- **Round Robin**: Default when no key is provided
+- **Key-based**: Hash of key determines partition
+- **Custom Partitioner**: User-defined partitioning logic
+
+#### 6. Consumers and Consumer Groups
+```
 Consumer Group: payment-processors
 ├── Consumer 1: Partitions [0, 1]
 ├── Consumer 2: Partitions [2, 3]
 └── Consumer 3: Partitions [4, 5]
-Consumer Concepts:
+```
 
-Consumer Group: Logical grouping of consumers
-Partition Assignment: Each partition consumed by exactly one consumer in group
-Offset Management: Tracking position in each partition
-Commit Strategies: Auto-commit vs manual commit
-Important Configurations
-Broker Configurations
-Essential Settings
+**Consumer Concepts:**
+- **Consumer Group**: Logical grouping of consumers
+- **Partition Assignment**: Each partition consumed by exactly one consumer in group
+- **Offset Management**: Tracking position in each partition
+- **Commit Strategies**: Auto-commit vs manual commit
+
+---
+
+## Important Configurations
+
+### Broker Configurations
+
+#### Essential Settings
+```properties
 # Server Basics
 broker.id=1
 listeners=PLAINTEXT://localhost:9092
@@ -117,7 +142,10 @@ socket.request.max.bytes=104857600
 # Memory and Processing
 num.replica.fetchers=4
 replica.fetch.max.bytes=1048576
-Advanced Broker Settings
+```
+
+#### Advanced Broker Settings
+```properties
 # Compression
 compression.type=snappy
 
@@ -132,8 +160,12 @@ sasl.mechanism.inter.broker.protocol=PLAIN
 # Monitoring
 metric.reporters=io.confluent.metrics.reporter.ConfluentMetricsReporter
 confluent.metrics.reporter.bootstrap.servers=localhost:9092
-Producer Configurations
-Performance-Critical Settings
+```
+
+### Producer Configurations
+
+#### Performance-Critical Settings
+```properties
 # Acknowledgment
 acks=all  # or -1 for strongest durability
 retries=2147483647
@@ -155,7 +187,10 @@ delivery.timeout.ms=120000
 
 # Partitioning
 partitioner.class=org.apache.kafka.clients.producer.internals.DefaultPartitioner
-Producer Configuration Examples
+```
+
+#### Producer Configuration Examples
+```java
 // High Throughput Producer
 Properties props = new Properties();
 props.put("bootstrap.servers", "localhost:9092");
@@ -172,8 +207,12 @@ reliableProps.put("acks", "all");
 reliableProps.put("retries", Integer.MAX_VALUE);
 reliableProps.put("enable.idempotence", true);
 reliableProps.put("max.in.flight.requests.per.connection", 1);
-Consumer Configurations
-Essential Consumer Settings
+```
+
+### Consumer Configurations
+
+#### Essential Consumer Settings
+```properties
 # Connection
 bootstrap.servers=localhost:9092
 group.id=my-consumer-group
@@ -197,7 +236,10 @@ max.poll.records=500
 fetch.min.bytes=1
 fetch.max.wait.ms=500
 max.partition.fetch.bytes=1048576
-Consumer Configuration Examples
+```
+
+#### Consumer Configuration Examples
+```java
 // High Throughput Consumer
 Properties props = new Properties();
 props.put("bootstrap.servers", "localhost:9092");
@@ -212,14 +254,21 @@ lowLatencyProps.put("bootstrap.servers", "localhost:9092");
 lowLatencyProps.put("group.id", "low-latency-group");
 lowLatencyProps.put("fetch.min.bytes", 1);
 lowLatencyProps.put("fetch.max.wait.ms", 1);
-Consumer Rebalancing
-Rebalancing Triggers
-Consumer joins the group
-Consumer leaves the group (graceful shutdown or crash)
-Consumer is considered dead (missed heartbeats)
-Topic partition count changes
-Subscription pattern changes
-Rebalancing Process
+```
+
+---
+
+## Consumer Rebalancing
+
+### Rebalancing Triggers
+1. **Consumer joins the group**
+2. **Consumer leaves the group** (graceful shutdown or crash)
+3. **Consumer is considered dead** (missed heartbeats)
+4. **Topic partition count changes**
+5. **Subscription pattern changes**
+
+### Rebalancing Process
+```
 1. Consumer sends JoinGroup request to Group Coordinator
 2. Group Coordinator selects a Consumer Leader
 3. Consumer Leader receives group membership and subscription info
@@ -227,18 +276,28 @@ Rebalancing Process
 5. Consumer Leader sends assignment back to Group Coordinator
 6. Group Coordinator sends assignments to all consumers
 7. Consumers start consuming from assigned partitions
-Partition Assignment Strategies
-1. Range Assignor (Default)
+```
+
+### Partition Assignment Strategies
+
+#### 1. Range Assignor (Default)
+```
 Topic: events (6 partitions), 3 consumers
 Consumer 1: [0, 1]
 Consumer 2: [2, 3]
 Consumer 3: [4, 5]
-2. Round Robin Assignor
+```
+
+#### 2. Round Robin Assignor
+```
 Topic A: [0, 1, 2], Topic B: [0, 1, 2], 3 consumers
 Consumer 1: [A0, B1]
 Consumer 2: [A1, B2]
 Consumer 3: [A2, B0]
-3. Sticky Assignor
+```
+
+#### 3. Sticky Assignor
+```
 # Minimizes partition movement during rebalancing
 # Before rebalancing:
 Consumer 1: [0, 1, 2]
@@ -248,11 +307,15 @@ Consumer 2: [3, 4, 5]
 Consumer 1: [0, 1]
 Consumer 2: [3, 4]
 Consumer 3: [2, 5]
-4. Cooperative Sticky Assignor
-Incremental Rebalancing: Only revokes partitions that need to be moved
-Reduced Downtime: Consumers continue processing unaffected partitions
-Better Performance: Minimal disruption during rebalancing
-Rebalancing Configuration
+```
+
+#### 4. Cooperative Sticky Assignor
+- **Incremental Rebalancing**: Only revokes partitions that need to be moved
+- **Reduced Downtime**: Consumers continue processing unaffected partitions
+- **Better Performance**: Minimal disruption during rebalancing
+
+### Rebalancing Configuration
+```properties
 # Rebalancing Timeouts
 session.timeout.ms=30000          # How long before consumer is considered dead
 heartbeat.interval.ms=3000        # How often to send heartbeats
@@ -262,7 +325,10 @@ max.poll.interval.ms=300000       # Max time between poll() calls
 partition.assignment.strategy=org.apache.kafka.clients.consumer.CooperativeStickyAssignor
 
 # Rebalancing Listeners
-Handling Rebalancing in Code
+```
+
+### Handling Rebalancing in Code
+```java
 public class RebalanceListener implements ConsumerRebalanceListener {
     private Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();
     
@@ -282,22 +348,31 @@ public class RebalanceListener implements ConsumerRebalanceListener {
 
 // Usage
 consumer.subscribe(Arrays.asList("my-topic"), new RebalanceListener());
-Minimizing Rebalancing Impact
-Tune session timeout and heartbeat interval
-Use cooperative assignors
-Implement proper rebalance listeners
-Graceful consumer shutdown
-Monitor max.poll.interval.ms
-Advanced Consumer Groups and Rebalancing
-Consumer Group Lifecycle and States
-Consumer Group States
+```
+
+### Minimizing Rebalancing Impact
+1. **Tune session timeout and heartbeat interval**
+2. **Use cooperative assignors**
+3. **Implement proper rebalance listeners**
+4. **Graceful consumer shutdown**
+5. **Monitor max.poll.interval.ms**
+
+## Advanced Consumer Groups and Rebalancing
+
+### Consumer Group Lifecycle and States
+
+#### Consumer Group States
+```
 Consumer Group States:
 ├── Empty: No active members
 ├── PreparingRebalance: Coordinator waiting for members to rejoin
 ├── CompletingRebalance: Coordinator waiting for assignment acknowledgment
 ├── Stable: All members have joined and received assignments
 └── Dead: Group has been removed
-Detailed Consumer Group Mechanics
+```
+
+#### Detailed Consumer Group Mechanics
+```java
 public class ConsumerGroupLifecycle {
     
     public void demonstrateGroupStates() {
@@ -318,7 +393,10 @@ public class ConsumerGroupLifecycle {
         consumer2.poll(Duration.ofMillis(100)); // Triggers rebalance
     }
 }
-Group Coordinator Selection
+```
+
+#### Group Coordinator Selection
+```java
 public class GroupCoordinatorLogic {
     
     public int determineGroupCoordinator(String groupId, int numBrokers) {
@@ -343,8 +421,12 @@ public class GroupCoordinatorLogic {
         log.info("Coordinator failover triggers full rebalance");
     }
 }
-Comprehensive Rebalancing Causes
-1. Consumer Lifecycle Events
+```
+
+### Comprehensive Rebalancing Causes
+
+#### 1. Consumer Lifecycle Events
+```java
 public class RebalancingTriggers {
     
     // Cause 1: Consumer joins the group
@@ -385,7 +467,10 @@ public class RebalancingTriggers {
         }
     }
 }
-2. Topic and Partition Changes
+```
+
+#### 2. Topic and Partition Changes
+```java
 public class TopicChangeRebalancing {
     
     // Cause 5: Topic partition count increases
@@ -425,7 +510,10 @@ public class TopicChangeRebalancing {
         log.info("New topic matching pattern triggers rebalance");
     }
 }
-3. Configuration and Network Issues
+```
+
+#### 3. Configuration and Network Issues
+```java
 public class ConfigurationRebalancing {
     
     // Cause 8: Subscription changes
@@ -463,8 +551,12 @@ public class ConfigurationRebalancing {
         log.info("Coordinator failure triggers full group rebalance");
     }
 }
-Rebalancing Configuration Tuning
-Essential Rebalancing Parameters
+```
+
+### Rebalancing Configuration Tuning
+
+#### Essential Rebalancing Parameters
+```properties
 # Session Management
 session.timeout.ms=30000              # How long before consumer is considered dead
 heartbeat.interval.ms=3000            # How often to send heartbeats (should be 1/3 of session timeout)
@@ -478,9 +570,12 @@ rebalance.timeout.ms=60000            # Max time for rebalance to complete
 metadata.max.age.ms=300000            # How often to refresh topic metadata
 connections.max.idle.ms=540000        # Close idle connections after this time
 request.timeout.ms=30000              # Client request timeout
-Tuning for Different Scenarios
-1. High-Throughput, Low-Latency Scenario
+```
 
+#### Tuning for Different Scenarios
+
+**1. High-Throughput, Low-Latency Scenario**
+```java
 public class HighThroughputRebalancingConfig {
     
     public Properties getOptimizedConfig() {
@@ -501,8 +596,10 @@ public class HighThroughputRebalancingConfig {
         return props;
     }
 }
-2. Batch Processing Scenario
+```
 
+**2. Batch Processing Scenario**
+```java
 public class BatchProcessingRebalancingConfig {
     
     public Properties getBatchConfig() {
@@ -523,8 +620,10 @@ public class BatchProcessingRebalancingConfig {
         return props;
     }
 }
-3. Reliable Processing Scenario
+```
 
+**3. Reliable Processing Scenario**
+```java
 public class ReliableProcessingRebalancingConfig {
     
     public Properties getReliableConfig() {
@@ -544,8 +643,12 @@ public class ReliableProcessingRebalancingConfig {
         return props;
     }
 }
-Rebalancing Protocols
-Eager Rebalancing Protocol (Legacy)
+```
+
+### Rebalancing Protocols
+
+#### Eager Rebalancing Protocol (Legacy)
+```java
 public class EagerRebalancingProtocol {
     
     /*
@@ -584,7 +687,10 @@ public class EagerRebalancingProtocol {
         });
     }
 }
-Cooperative Rebalancing Protocol (Modern)
+```
+
+#### Cooperative Rebalancing Protocol (Modern)
+```java
 public class CooperativeRebalancingProtocol {
     
     /*
@@ -628,8 +734,12 @@ public class CooperativeRebalancingProtocol {
         });
     }
 }
-Custom Rebalancing Interfaces and Logic
-Custom Partition Assignment Strategy
+```
+
+### Custom Rebalancing Interfaces and Logic
+
+#### Custom Partition Assignment Strategy
+```java
 public class CustomPartitionAssignor implements ConsumerPartitionAssignor {
     
     @Override
@@ -709,7 +819,10 @@ public class CustomPartitionAssignor implements ConsumerPartitionAssignor {
                 metadata.memberId(), assignment.partitions());
     }
 }
-Priority-Based Consumer Implementation
+```
+
+#### Priority-Based Consumer Implementation
+```java
 public class PriorityConsumer {
     
     public KafkaConsumer<String, String> createPriorityConsumer(int priority) {
@@ -751,7 +864,10 @@ public class PriorityConsumer {
         }
     }
 }
-Advanced Custom Rebalancing Logic
+```
+
+#### Advanced Custom Rebalancing Logic
+```java
 public class AdvancedCustomRebalancing {
     
     // Custom assignor that considers consumer capacity
@@ -885,7 +1001,10 @@ public class AdvancedCustomRebalancing {
         }
     }
 }
-Rebalancing Metrics and Monitoring
+```
+
+#### Rebalancing Metrics and Monitoring
+```java
 public class RebalancingMetrics {
     private final MeterRegistry meterRegistry;
     private final AtomicLong rebalanceCount = new AtomicLong(0);
@@ -1091,7 +1210,10 @@ public class GeographicPartitionAssignor implements ConsumerPartitionAssignor {
         }
     }
 }
-2. Workload-Aware Assignor
+```
+
+#### 2. Workload-Aware Assignor
+```java
 /**
  * Assignor that considers consumer processing capacity and current workload
  * to distribute partitions optimally based on consumer capabilities
@@ -1262,8 +1384,12 @@ public class WorkloadAwareAssignor implements ConsumerPartitionAssignor {
         // getters...
     }
 }
-ConsumerRebalanceListener Examples
-1. Stateful Processing Rebalance Listener
+```
+
+### ConsumerRebalanceListener Examples
+
+#### 1. Stateful Processing Rebalance Listener
+```java
 /**
  * Rebalance listener for stateful processing applications
  * Handles state transfer and cleanup during rebalancing
@@ -1445,7 +1571,10 @@ public class StatefulProcessingRebalanceListener implements ConsumerRebalanceLis
         offsetManager.initializePartition(partition);
     }
 }
-2. Database Transaction Rebalance Listener
+```
+
+#### 2. Database Transaction Rebalance Listener
+```java
 /**
  * Rebalance listener that handles database transactions during rebalancing
  * Ensures data consistency when consumer state is persisted in database
@@ -1683,7 +1812,10 @@ public class DatabaseTransactionRebalanceListener implements ConsumerRebalanceLi
         return ManagementFactory.getRuntimeMXBean().getName();
     }
 }
-3. Monitoring and Alerting Rebalance Listener
+```
+
+#### 3. Monitoring and Alerting Rebalance Listener
+```java
 /**
  * Rebalance listener that provides comprehensive monitoring and alerting
  * for rebalancing events and performance metrics
@@ -2003,7 +2135,10 @@ public class HeartbeatFailureScenarios {
         }
     }
 }
-2. Processing Timeout Violations
+```
+
+#### 2. Processing Timeout Violations
+```java
 public class ProcessingTimeoutScenarios {
     
     // Scenario 1: max.poll.interval.ms exceeded
@@ -2075,7 +2210,10 @@ public class ProcessingTimeoutScenarios {
         }
     }
 }
-3. Consumer Group Protocol Violations
+```
+
+#### 3. Consumer Group Protocol Violations
+```java
 public class ProtocolViolationScenarios {
     
     // Scenario 1: Multiple consumers with same client.id
@@ -2147,8 +2285,12 @@ public class ProtocolViolationScenarios {
         }
     }
 }
-How to Minimize Rebalancing
-1. Configuration Optimization
+```
+
+### How to Minimize Rebalancing
+
+#### 1. Configuration Optimization
+```java
 public class RebalancingMinimizationStrategies {
     
     // Strategy 1: Optimal Timeout Configuration
@@ -2206,8 +2348,12 @@ public class RebalancingMinimizationStrategies {
         }
     }
 }
-Complete Consumer Lifecycle and Rebalancing Process
-1. Consumer Startup Lifecycle
+```
+
+### Complete Consumer Lifecycle and Rebalancing Process
+
+#### 1. Consumer Startup Lifecycle
+```java
 public class ConsumerLifecycleManager {
     
     // Phase 1: Consumer Initialization
@@ -2409,7 +2555,10 @@ public class ConsumerLifecycleManager {
         }
     }
 }
-2. Detailed Rebalancing Process Timeline
+```
+
+#### 2. Detailed Rebalancing Process Timeline
+```java
 public class RebalancingProcessTimeline {
     
     public void completeRebalancingWalkthrough() {
@@ -2550,11 +2699,17 @@ public class RebalancingProcessTimeline {
         log.info("Rebalance complete - group is stable");
     }
 }
-Transaction Handling
-Overview of Kafka Transactions
+```
+
+---
+
+## Transaction Handling
+
+### Overview of Kafka Transactions
 Kafka transactions provide atomicity guarantees across multiple partitions and topics, enabling exactly-once processing semantics for stream processing applications.
 
-Transaction Components
+#### Transaction Components
+```
 Transaction Coordinator
 ├── Transaction Log Topic (__transaction_state)
 ├── Producer ID Management
@@ -2566,8 +2721,12 @@ Producer Instance
 ├── Producer ID (assigned by coordinator)
 ├── Epoch (prevents zombie producers)
 └── Transaction State (ONGOING, PREPARE_COMMIT, etc.)
-Transactional Producer
-Basic Transactional Producer Setup
+```
+
+### Transactional Producer
+
+#### Basic Transactional Producer Setup
+```java
 Properties props = new Properties();
 props.put("bootstrap.servers", "localhost:9092");
 props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
@@ -2584,7 +2743,10 @@ KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 
 // Initialize transactions
 producer.initTransactions();
-Transaction Lifecycle
+```
+
+#### Transaction Lifecycle
+```java
 public class TransactionalService {
     private final KafkaProducer<String, String> producer;
     
@@ -2613,9 +2775,16 @@ public class TransactionalService {
         }
     }
 }
-Acknowledgments and Delivery Guarantees
-Producer Acknowledgment Levels
-acks=0 (Fire and Forget)
+```
+
+---
+
+## Acknowledgments and Delivery Guarantees
+
+### Producer Acknowledgment Levels
+
+#### acks=0 (Fire and Forget)
+```java
 Properties props = new Properties();
 props.put("acks", "0");
 // Producer doesn't wait for any acknowledgment
@@ -2623,13 +2792,16 @@ props.put("acks", "0");
 // Messages can be lost if broker fails
 
 // Use case: Metrics, logs where some data loss is acceptable
-Characteristics:
+```
 
-Latency: Lowest (no waiting)
-Throughput: Highest
-Durability: None (messages can be lost)
-Use Cases: High-volume metrics, non-critical logging
-acks=1 (Leader Acknowledgment)
+**Characteristics:**
+- **Latency**: Lowest (no waiting)
+- **Throughput**: Highest
+- **Durability**: None (messages can be lost)
+- **Use Cases**: High-volume metrics, non-critical logging
+
+#### acks=1 (Leader Acknowledgment)
+```java
 Properties props = new Properties();
 props.put("acks", "1");
 // Producer waits for leader replica acknowledgment only
@@ -2637,13 +2809,16 @@ props.put("acks", "1");
 // Messages can be lost if leader fails before replication
 
 // Use case: Most common setting for general applications
-Characteristics:
+```
 
-Latency: Medium
-Throughput: Good
-Durability: Moderate (can lose messages if leader fails)
-Use Cases: General application messages, events
-acks=all/-1 (Full ISR Acknowledgment)
+**Characteristics:**
+- **Latency**: Medium
+- **Throughput**: Good
+- **Durability**: Moderate (can lose messages if leader fails)
+- **Use Cases**: General application messages, events
+
+#### acks=all/-1 (Full ISR Acknowledgment)
+```java
 Properties props = new Properties();
 props.put("acks", "all"); // or "-1"
 props.put("min.insync.replicas", "2"); // Minimum replicas that must acknowledge
@@ -2652,30 +2827,45 @@ props.put("min.insync.replicas", "2"); // Minimum replicas that must acknowledge
 // Lower throughput due to waiting for all replicas
 
 // Use case: Critical data that cannot be lost
-Characteristics:
+```
 
-Latency: Highest (waits for all ISR)
-Throughput: Lower
-Durability: Strongest (no data loss if min.insync.replicas maintained)
-Use Cases: Financial transactions, critical business events
-Exactly-Once Semantics
-Understanding Exactly-Once Semantics (EOS)
-What is Exactly-Once?
+**Characteristics:**
+- **Latency**: Highest (waits for all ISR)
+- **Throughput**: Lower
+- **Durability**: Strongest (no data loss if min.insync.replicas maintained)
+- **Use Cases**: Financial transactions, critical business events
+
+---
+
+## Exactly-Once Semantics
+
+### Understanding Exactly-Once Semantics (EOS)
+
+#### What is Exactly-Once?
 Exactly-once semantics ensures that each message is processed exactly one time, even in the presence of failures, retries, or rebalancing.
 
+```
 Without EOS:
 Producer → [Retry] → Broker → Consumer → [Duplicate Processing]
 
 With EOS:
 Producer → [Idempotent] → Broker → [Transactional] → Consumer → [Exactly-Once Processing]
-EOS Components
-Idempotent Producer: Prevents duplicate messages on retry
-Transactions: Atomic writes across partitions
-Transactional Consumer: Reads only committed messages
-Offset Management: Transactional offset commits
-Idempotency
-Producer Idempotency
-Enabling Idempotent Producer
+```
+
+#### EOS Components
+1. **Idempotent Producer**: Prevents duplicate messages on retry
+2. **Transactions**: Atomic writes across partitions
+3. **Transactional Consumer**: Reads only committed messages
+4. **Offset Management**: Transactional offset commits
+
+---
+
+## Idempotency
+
+### Producer Idempotency
+
+#### Enabling Idempotent Producer
+```java
 Properties props = new Properties();
 props.put("enable.idempotence", "true");
 props.put("acks", "all");
@@ -2684,7 +2874,10 @@ props.put("max.in.flight.requests.per.connection", 5);
 
 // Idempotent producer prevents duplicate messages during retries
 KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-How Idempotency Works
+```
+
+#### How Idempotency Works
+```
 Producer Request includes:
 ├── Producer ID (PID) - assigned by broker
 ├── Sequence Number - per partition sequence
@@ -2693,11 +2886,18 @@ Producer Request includes:
 Broker maintains:
 ├── Last sequence number per PID per partition
 └── Duplicate detection logic
-Consumer Lag Troubleshooting
-Understanding Consumer Lag
-What is Consumer Lag?
+```
+
+---
+
+## Consumer Lag Troubleshooting
+
+### Understanding Consumer Lag
+
+#### What is Consumer Lag?
 Consumer lag is the difference between the latest offset in a partition and the consumer's current offset.
 
+```bash
 # Check consumer lag
 kafka-consumer-groups.sh --bootstrap-server localhost:9092 \
   --group my-group --describe
@@ -2706,8 +2906,12 @@ kafka-consumer-groups.sh --bootstrap-server localhost:9092 \
 # TOPIC    PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG
 # events   0          1000           1500            500
 # events   1          800            1200            400
-Lag Analysis Tools
-Advanced Lag Monitoring Script
+```
+
+### Lag Analysis Tools
+
+#### Advanced Lag Monitoring Script
+```bash
 #!/bin/bash
 # advanced-lag-monitor.sh
 
@@ -2743,7 +2947,10 @@ for group in $(kafka-consumer-groups.sh --bootstrap-server $BOOTSTRAP_SERVERS --
     monitor_consumer_lag $group
     echo ""
 done
-Consumer Lag Metrics Collection
+```
+
+#### Consumer Lag Metrics Collection
+```java
 @Component
 public class ConsumerLagMonitor {
     private final AdminClient adminClient;
@@ -2784,8 +2991,12 @@ public class ConsumerLagMonitor {
         }
     }
 }
-Lag Troubleshooting Strategies
-1. Identify Root Causes
+```
+
+### Lag Troubleshooting Strategies
+
+#### 1. Identify Root Causes
+```java
 public class LagDiagnostics {
     
     public void diagnoseLag(String consumerGroup) {
@@ -2825,7 +3036,10 @@ public class LagDiagnostics {
         }
     }
 }
-2. Scaling Solutions
+```
+
+#### 2. Scaling Solutions
+```java
 public class LagResolutionStrategies {
     
     // Strategy 1: Increase consumer instances
@@ -2887,8 +3101,12 @@ public class LagResolutionStrategies {
         }
     }
 }
-Emergency Lag Recovery
-Fast-Forward Strategy
+```
+
+### Emergency Lag Recovery
+
+#### Fast-Forward Strategy
+```java
 public class EmergencyLagRecovery {
     
     public void fastForwardConsumer(String consumerGroup, String topic) {
@@ -2956,9 +3174,16 @@ public class EmergencyLagRecovery {
         }
     }
 }
-Monitoring
-Key Metrics to Monitor
-Broker Metrics
+```
+
+---
+
+## Monitoring
+
+### Key Metrics to Monitor
+
+#### Broker Metrics
+```
 # Throughput Metrics
 kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec
 kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec
@@ -2978,7 +3203,10 @@ kafka.server:type=ReplicaManager,name=IsrExpandsPerSec
 # Log Metrics
 kafka.log:type=LogSize,name=Size,topic=*,partition=*
 kafka.log:type=LogEndOffset,name=Value,topic=*,partition=*
-Producer Metrics
+```
+
+#### Producer Metrics
+```
 # Throughput
 kafka.producer:type=producer-metrics,client-id=*,attribute=record-send-rate
 kafka.producer:type=producer-metrics,client-id=*,attribute=byte-rate
@@ -2990,7 +3218,10 @@ kafka.producer:type=producer-metrics,client-id=*,attribute=request-latency-avg
 # Errors
 kafka.producer:type=producer-metrics,client-id=*,attribute=record-error-rate
 kafka.producer:type=producer-metrics,client-id=*,attribute=record-retry-rate
-Consumer Metrics
+```
+
+#### Consumer Metrics
+```
 # Lag Monitoring
 kafka.consumer:type=consumer-fetch-manager-metrics,client-id=*,attribute=records-lag-max
 kafka.consumer:type=consumer-fetch-manager-metrics,client-id=*,attribute=records-lag-avg
@@ -3001,8 +3232,12 @@ kafka.consumer:type=consumer-fetch-manager-metrics,client-id=*,attribute=bytes-c
 
 # Processing Time
 kafka.consumer:type=consumer-coordinator-metrics,client-id=*,attribute=commit-latency-avg
-Monitoring Tools
-1. JMX Monitoring
+```
+
+### Monitoring Tools
+
+#### 1. JMX Monitoring
+```bash
 # Enable JMX on Kafka broker
 export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote \
   -Dcom.sun.management.jmxremote.authenticate=false \
@@ -3011,7 +3246,10 @@ export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote \
 
 # Query JMX metrics
 jconsole localhost:9999
-2. Kafka Manager / AKHQ
+```
+
+#### 2. Kafka Manager / AKHQ
+```yaml
 # AKHQ Configuration
 akhq:
   connections:
@@ -3021,7 +3259,10 @@ akhq:
       
   security:
     default-group: admin
-3. Prometheus + Grafana Setup
+```
+
+#### 3. Prometheus + Grafana Setup
+```yaml
 # docker-compose.yml for monitoring stack
 version: '3'
 services:
@@ -3038,6 +3279,9 @@ services:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
+```
+
+```yaml
 # prometheus.yml
 global:
   scrape_interval: 15s
@@ -3047,7 +3291,10 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9999']
     metrics_path: /metrics
-4. Consumer Lag Monitoring Script
+```
+
+#### 4. Consumer Lag Monitoring Script
+```bash
 #!/bin/bash
 # consumer-lag-monitor.sh
 
@@ -3066,7 +3313,10 @@ for group in $($KAFKA_HOME/bin/kafka-consumer-groups.sh \
         --group $group --describe
     echo ""
 done
-Alert Thresholds
+```
+
+### Alert Thresholds
+```yaml
 # Sample alerting rules
 groups:
   - name: kafka.rules
@@ -3088,16 +3338,23 @@ groups:
         for: 5m
         annotations:
           summary: "Under-replicated partitions detected"
-Advanced Debugging and Troubleshooting
-Common Issues and Solutions
-1. Consumer Lag Issues
-Symptoms:
+```
 
-High consumer lag
-Slow message processing
-Timeouts
-Debugging Steps:
+---
 
+## Advanced Debugging and Troubleshooting
+
+### Common Issues and Solutions
+
+#### 1. Consumer Lag Issues
+
+**Symptoms:**
+- High consumer lag
+- Slow message processing
+- Timeouts
+
+**Debugging Steps:**
+```bash
 # Check consumer group status
 kafka-consumer-groups.sh --bootstrap-server localhost:9092 \
   --group my-group --describe
@@ -3111,28 +3368,33 @@ kafka-run-class.sh kafka.tools.ConsumerPerformance \
   --bootstrap-server localhost:9092 \
   --topic my-topic \
   --messages 10000
-Solutions:
+```
 
-Increase number of consumers
-Optimize consumer processing logic
-Increase max.poll.records
-Tune fetch.min.bytes and fetch.max.wait.ms
-2. Rebalancing Issues
-Symptoms:
+**Solutions:**
+- Increase number of consumers
+- Optimize consumer processing logic
+- Increase `max.poll.records`
+- Tune `fetch.min.bytes` and `fetch.max.wait.ms`
 
-Frequent rebalancing
-Consumer timeouts
-Processing interruptions
-Debugging:
+#### 2. Rebalancing Issues
 
+**Symptoms:**
+- Frequent rebalancing
+- Consumer timeouts
+- Processing interruptions
+
+**Debugging:**
+```bash
 # Enable detailed consumer logging
 log4j.logger.org.apache.kafka.clients.consumer=DEBUG
 log4j.logger.org.apache.kafka.clients.consumer.internals=DEBUG
 
 # Monitor rebalancing metrics
 kafka.consumer:type=consumer-coordinator-metrics,client-id=*,attribute=rebalance-rate-per-hour
-Solutions:
+```
 
+**Solutions:**
+```java
 // Proper session timeout configuration
 Properties props = new Properties();
 props.put("session.timeout.ms", "30000");
@@ -3154,9 +3416,12 @@ try {
 } finally {
     consumer.close();
 }
-3. Message Loss/Duplication
-Message Loss Debugging:
+```
 
+#### 3. Message Loss/Duplication
+
+**Message Loss Debugging:**
+```java
 // Check producer acknowledgment settings
 props.put("acks", "all");
 props.put("retries", Integer.MAX_VALUE);
@@ -3165,8 +3430,10 @@ props.put("enable.idempotence", true);
 // Verify min.insync.replicas
 kafka-configs.sh --bootstrap-server localhost:9092 \
   --entity-type topics --entity-name my-topic --describe
-Duplication Debugging:
+```
 
+**Duplication Debugging:**
+```java
 // Enable idempotent producer
 props.put("enable.idempotence", true);
 props.put("max.in.flight.requests.per.connection", 5);
@@ -3186,9 +3453,12 @@ public class IdempotentMessageProcessor {
         processedMessageIds.add(messageId);
     }
 }
-4. Performance Issues
-Throughput Debugging:
+```
 
+#### 4. Performance Issues
+
+**Throughput Debugging:**
+```bash
 # Producer performance test
 kafka-producer-perf-test.sh --topic my-topic \
   --num-records 100000 \
@@ -3200,8 +3470,10 @@ kafka-producer-perf-test.sh --topic my-topic \
 kafka-consumer-perf-test.sh --topic my-topic \
   --bootstrap-server localhost:9092 \
   --messages 100000
-Network Issues:
+```
 
+**Network Issues:**
+```bash
 # Check network configuration
 netstat -tulpn | grep 9092
 ss -tulpn | grep 9092
@@ -3209,8 +3481,12 @@ ss -tulpn | grep 9092
 # Test connectivity
 telnet broker-host 9092
 kafka-broker-api-versions.sh --bootstrap-server localhost:9092
-Debugging Tools
-1. Kafka Scripts
+```
+
+### Debugging Tools
+
+#### 1. Kafka Scripts
+```bash
 # Topic management
 kafka-topics.sh --bootstrap-server localhost:9092 --list
 kafka-topics.sh --bootstrap-server localhost:9092 --topic my-topic --describe
@@ -3224,7 +3500,10 @@ kafka-dump-log.sh --files /var/kafka-logs/my-topic-0/00000000000000000000.log --
 
 # Configuration
 kafka-configs.sh --bootstrap-server localhost:9092 --entity-type brokers --entity-name 1 --describe
-2. Log Analysis
+```
+
+#### 2. Log Analysis
+```bash
 # Broker logs
 tail -f /var/log/kafka/server.log
 
@@ -3233,7 +3512,10 @@ grep "ERROR" /var/log/kafka/server.log
 grep "WARN" /var/log/kafka/server.log
 grep "rebalance" /var/log/kafka/server.log
 grep "ISR" /var/log/kafka/server.log
-3. JVM Debugging
+```
+
+#### 3. JVM Debugging
+```bash
 # GC analysis
 -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps
 
@@ -3242,10 +3524,14 @@ grep "ISR" /var/log/kafka/server.log
 
 # JFR profiling
 -XX:+FlightRecorder -XX:StartFlightRecording=duration=60s,filename=kafka-profile.jfr
-Advanced Troubleshooting Scenarios
-Broker-Level Issues
-1. Split Brain / Zombie Leaders
+```
 
+### Advanced Troubleshooting Scenarios
+
+#### Broker-Level Issues
+
+**1. Split Brain / Zombie Leaders**
+```bash
 # Detect split brain scenario
 kafka-topics.sh --bootstrap-server localhost:9092 --describe | grep "Leader: none"
 
@@ -3254,8 +3540,10 @@ kafka-topics.sh --bootstrap-server localhost:9092 --describe --under-replicated-
 
 # Force leader election if needed (use with caution)
 kafka-leader-election.sh --bootstrap-server localhost:9092 --election-type preferred --all-topic-partitions
-2. Disk Space Issues
+```
 
+**2. Disk Space Issues**
+```java
 public class DiskSpaceMonitor {
     @Scheduled(fixedRate = 60000) // Every minute
     public void checkDiskSpace() {
@@ -3286,8 +3574,10 @@ public class DiskSpaceMonitor {
         }
     }
 }
-3. Memory Issues and GC Problems
+```
 
+**3. Memory Issues and GC Problems**
+```java
 public class MemoryDiagnostics {
     
     public void analyzeMemoryUsage() {
@@ -3324,9 +3614,12 @@ public class MemoryDiagnostics {
         }
     }
 }
-Network and Connectivity Issues
-1. Network Partitions
+```
 
+#### Network and Connectivity Issues
+
+**1. Network Partitions**
+```java
 public class NetworkDiagnostics {
     
     public void diagnoseNetworkIssues(String brokerHost, int brokerPort) {
@@ -3362,8 +3655,10 @@ public class NetworkDiagnostics {
         checkKafkaVersionCompatibility();
     }
 }
-2. SSL/TLS Issues
+```
 
+**2. SSL/TLS Issues**
+```java
 public class SSLDiagnostics {
     
     public void diagnoseSSLIssues(String keystorePath, String truststorePath) {
@@ -3398,9 +3693,12 @@ public class SSLDiagnostics {
         }
     }
 }
-Consumer-Specific Troubleshooting
-1. Rebalancing Storms
+```
 
+#### Consumer-Specific Troubleshooting
+
+**1. Rebalancing Storms**
+```java
 public class RebalancingDiagnostics {
     private final AtomicLong rebalanceCount = new AtomicLong(0);
     private final AtomicLong lastRebalanceTime = new AtomicLong(System.currentTimeMillis());
@@ -3449,8 +3747,10 @@ public class RebalancingDiagnostics {
         }
     }
 }
-2. Offset Management Issues
+```
 
+**2. Offset Management Issues**
+```java
 public class OffsetDiagnostics {
     
     public void diagnoseOffsetIssues(KafkaConsumer<String, String> consumer, String groupId) {
@@ -3511,9 +3811,12 @@ public class OffsetDiagnostics {
         }
     }
 }
-Producer-Specific Troubleshooting
-1. Producer Metadata Issues
+```
 
+#### Producer-Specific Troubleshooting
+
+**1. Producer Metadata Issues**
+```java
 public class ProducerDiagnostics {
     
     public void diagnoseMetadataIssues(KafkaProducer<String, String> producer) {
@@ -3566,8 +3869,10 @@ public class ProducerDiagnostics {
         }
     }
 }
-2. Serialization Issues
+```
 
+**2. Serialization Issues**
+```java
 public class SerializationDiagnostics {
     
     public void diagnoseSerializationIssues() {
@@ -3627,8 +3932,12 @@ public class SerializationDiagnostics {
         }
     }
 }
-Troubleshooting Tools and Scripts
-Comprehensive Health Check Script
+```
+
+### Troubleshooting Tools and Scripts
+
+#### Comprehensive Health Check Script
+```bash
 #!/bin/bash
 # kafka-health-check.sh
 
@@ -3681,7 +3990,10 @@ else
 fi
 
 echo "=== Health Check Complete ===" | tee -a $LOG_FILE
-Performance Diagnostic Script
+```
+
+#### Performance Diagnostic Script
+```bash
 #!/bin/bash
 # kafka-performance-diagnostic.sh
 
@@ -3720,9 +4032,16 @@ $KAFKA_HOME/bin/kafka-topics.sh --bootstrap-server $BOOTSTRAP_SERVERS \
     --delete --topic $TEST_TOPIC
 
 echo "Performance diagnostic complete"
-Performance Tuning
-Producer Tuning
-Throughput Optimization
+```
+
+---
+
+## Performance Tuning
+
+### Producer Tuning
+
+#### Throughput Optimization
+```java
 Properties highThroughputProps = new Properties();
 // Batching
 highThroughputProps.put("batch.size", 65536);          // 64KB batches
@@ -3737,7 +4056,10 @@ highThroughputProps.put("acks", "1");                  // Leader acknowledgment 
 
 // Parallelism
 highThroughputProps.put("max.in.flight.requests.per.connection", 5);
-Latency Optimization
+```
+
+#### Latency Optimization
+```java
 Properties lowLatencyProps = new Properties();
 // Immediate sending
 lowLatencyProps.put("batch.size", 1);
@@ -3748,8 +4070,12 @@ lowLatencyProps.put("compression.type", "none");
 
 // Network settings
 lowLatencyProps.put("request.timeout.ms", 10000);
-Consumer Tuning
-High Throughput Consumer
+```
+
+### Consumer Tuning
+
+#### High Throughput Consumer
+```java
 Properties props = new Properties();
 // Fetch settings
 props.put("fetch.min.bytes", 50000);        // Wait for 50KB
@@ -3760,7 +4086,10 @@ props.put("max.poll.records", 1000);        // Process 1000 records per poll
 // Auto-commit for performance (trade-off with reliability)
 props.put("enable.auto.commit", "true");
 props.put("auto.commit.interval.ms", "1000");
-Parallel Processing
+```
+
+#### Parallel Processing
+```java
 @Component
 public class ParallelConsumer {
     private final ExecutorService executor = Executors.newFixedThreadPool(10);
@@ -3777,13 +4106,20 @@ public class ParallelConsumer {
         // Processing logic
     }
 }
-Broker Tuning
-Hardware Recommendations
+```
+
+### Broker Tuning
+
+#### Hardware Recommendations
+```
 CPU: 24+ cores for high throughput
 Memory: 64GB+ RAM
 Storage: NVMe SSDs for logs
 Network: 10GbE+ for high throughput clusters
-OS-Level Tuning
+```
+
+#### OS-Level Tuning
+```bash
 # File descriptor limits
 echo "* soft nofile 100000" >> /etc/security/limits.conf
 echo "* hard nofile 100000" >> /etc/security/limits.conf
@@ -3794,7 +4130,10 @@ echo "vm.dirty_ratio=80" >> /etc/sysctl.conf
 echo "vm.dirty_background_ratio=5" >> /etc/sysctl.conf
 echo "net.core.wmem_default=262144" >> /etc/sysctl.conf
 echo "net.core.rmem_default=262144" >> /etc/sysctl.conf
-JVM Tuning
+```
+
+#### JVM Tuning
+```bash
 # Heap size (typically 50% of system memory, max 32GB)
 export KAFKA_HEAP_OPTS="-Xmx16g -Xms16g"
 
@@ -3810,7 +4149,10 @@ export KAFKA_JVM_PERFORMANCE_OPTS="-XX:+UseG1GC \
 export KAFKA_JVM_PERFORMANCE_OPTS="$KAFKA_JVM_PERFORMANCE_OPTS \
   -XX:+UnlockExperimentalVMOptions \
   -XX:+UseCGroupMemoryLimitForHeap"
-Broker Configuration Tuning
+```
+
+#### Broker Configuration Tuning
+```properties
 # Network threads (1 per core)
 num.network.threads=16
 
@@ -3832,8 +4174,12 @@ log.cleanup.policy=delete
 replica.fetch.max.bytes=2097152
 replica.socket.timeout.ms=30000
 replica.socket.receive.buffer.bytes=65536
-Partition Strategy
-Optimal Partition Count
+```
+
+### Partition Strategy
+
+#### Optimal Partition Count
+```
 Guidelines:
 - Start with: (Target Throughput) / (Partition Throughput)
 - Consider: Number of consumers in largest consumer group
@@ -3844,7 +4190,10 @@ Example:
 Target: 100MB/s
 Per partition: 10MB/s
 Partitions needed: 10-15 partitions
-Custom Partitioner
+```
+
+#### Custom Partitioner
+```java
 public class CustomPartitioner implements Partitioner {
     @Override
     public int partition(String topic, Object key, byte[] keyBytes,
@@ -3861,7 +4210,10 @@ public class CustomPartitioner implements Partitioner {
         return Math.abs(key.hashCode()) % cluster.partitionCountForTopic(topic);
     }
 }
-Monitoring Performance
+```
+
+### Monitoring Performance
+```bash
 # Throughput monitoring script
 #!/bin/bash
 while true; do
@@ -3873,9 +4225,16 @@ while true; do
         --attributes Count | tail -1
     sleep 10
 done
-Best Practices
-Design Patterns
-1. Event Sourcing
+```
+
+---
+
+## Best Practices
+
+### Design Patterns
+
+#### 1. Event Sourcing
+```java
 @Entity
 public class OrderAggregate {
     private String orderId;
@@ -3894,7 +4253,10 @@ public class OrderAggregate {
         events.clear();
     }
 }
-2. CQRS (Command Query Responsibility Segregation)
+```
+
+#### 2. CQRS (Command Query Responsibility Segregation)
+```java
 // Command side
 @Service
 public class OrderCommandService {
@@ -3915,7 +4277,10 @@ public class OrderQueryService {
         readModelRepository.update(event);
     }
 }
-3. Saga Pattern
+```
+
+#### 3. Saga Pattern
+```java
 @Component
 public class OrderSagaOrchestrator {
     
@@ -3940,8 +4305,12 @@ public class OrderSagaOrchestrator {
             new ReleaseInventoryCommand(event.getOrderId()));
     }
 }
-Security Best Practices
-1. SSL/TLS Configuration
+```
+
+### Security Best Practices
+
+#### 1. SSL/TLS Configuration
+```properties
 # Broker SSL configuration
 listeners=SSL://localhost:9093
 security.inter.broker.protocol=SSL
@@ -3951,7 +4320,10 @@ ssl.key.password=password
 ssl.truststore.location=/etc/kafka/ssl/kafka.server.truststore.jks
 ssl.truststore.password=password
 ssl.client.auth=required
-2. SASL Authentication
+```
+
+#### 2. SASL Authentication
+```properties
 # SASL_PLAINTEXT configuration
 listeners=SASL_PLAINTEXT://localhost:9092
 security.inter.broker.protocol=SASL_PLAINTEXT
@@ -3966,7 +4338,10 @@ KafkaServer {
     user_admin="admin-secret"
     user_alice="alice-secret";
 };
-3. ACL (Access Control Lists)
+```
+
+#### 3. ACL (Access Control Lists)
+```bash
 # Create ACLs
 kafka-acls.sh --bootstrap-server localhost:9092 \
   --add --allow-principal User:alice \
@@ -3978,8 +4353,12 @@ kafka-acls.sh --bootstrap-server localhost:9092 \
 
 # List ACLs
 kafka-acls.sh --bootstrap-server localhost:9092 --list
-Operational Best Practices
-1. Capacity Planning
+```
+
+### Operational Best Practices
+
+#### 1. Capacity Planning
+```
 Calculation Framework:
 1. Message size: Average and peak message sizes
 2. Message rate: Messages per second
@@ -3992,7 +4371,10 @@ Example:
 - 24 hours retention = 86.4GB/day
 - 3x replication = 259.2GB/day
 - 30 days retention = 7.77TB
-2. Backup and Recovery
+```
+
+#### 2. Backup and Recovery
+```bash
 # Topic backup script
 #!/bin/bash
 BACKUP_DIR="/backup/kafka/$(date +%Y%m%d)"
@@ -4008,7 +4390,10 @@ kafka-configs.sh --bootstrap-server localhost:9092 \
 # Backup consumer group offsets
 kafka-consumer-groups.sh --bootstrap-server localhost:9092 \
   --all-groups --describe > $BACKUP_DIR/consumer-groups.txt
-3. Rolling Updates
+```
+
+#### 3. Rolling Updates
+```bash
 # Rolling broker update procedure
 1. Update broker configuration
 2. Restart one broker at a time
@@ -4032,8 +4417,14 @@ for broker in 1 2 3; do
     read -p "Continue with next broker? (y/n): " confirm
     [[ $confirm != "y" ]] && exit 1
 done
-Common Use Cases
-1. Real-time Analytics Pipeline
+```
+
+---
+
+## Common Use Cases
+
+### 1. Real-time Analytics Pipeline
+```java
 // Stream processing with Kafka Streams
 @Component
 public class AnalyticsStreamProcessor {
@@ -4048,7 +4439,10 @@ public class AnalyticsStreamProcessor {
             .to("click-analytics");
     }
 }
-2. Microservices Communication
+```
+
+### 2. Microservices Communication
+```java
 // Order service publishes events
 @Service
 public class OrderService {
@@ -4076,7 +4470,10 @@ public class InventoryService {
         inventoryService.reserveItems(event.getItems());
     }
 }
-3. Log Aggregation
+```
+
+### 3. Log Aggregation
+```java
 // Application logs to Kafka
 @Component
 public class KafkaLogAppender extends AppenderBase<ILoggingEvent> {
@@ -4095,7 +4492,10 @@ public class KafkaLogAppender extends AppenderBase<ILoggingEvent> {
             objectMapper.writeValueAsString(logEntry));
     }
 }
-4. CDC (Change Data Capture)
+```
+
+### 4. CDC (Change Data Capture)
+```java
 // Debezium connector configuration
 {
   "name": "mysql-connector",
@@ -4112,4 +4512,6 @@ public class KafkaLogAppender extends AppenderBase<ILoggingEvent> {
     "database.history.kafka.topic": "schema-changes"
   }
 }
+```
+
 This comprehensive study guide covers all the essential aspects of Apache Kafka that you requested. Each section provides both theoretical understanding and practical examples that you can use in real-world scenarios.
