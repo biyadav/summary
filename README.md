@@ -42,9 +42,11 @@ AOP :  what type of proxies and limitations
 
 | Header 1 | Header 2 | Header 3 |
 |---|---|---|
-| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
-| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
-| Row 3 Col 1 | Row 3 Col 2 | Row 3 Col 3 |
+| Design pattern , example from JDK Spring| Row 1 Col 2 | Row 1 Col 3 |
+| Threading  custom threadPool  producer consumer using blocking queue ,deadLock  code| Row 2 Col 2 | Row 2 Col 3 |
+| Kafka :  transaction , exactly once delivery , rebalncing cause , protocol  , 
+important config 
+Producer and consumer config . Sample code in Java | Row 3 Col 2 | Row 3 Col 3 |
 | Row 4 Col 1 | Row 4 Col 2 | Row 4 Col 3 |
 | Row 5 Col 1 | Row 5 Col 2 | Row 5 Col 3 |
 | Row 6 Col 1 | Row 6 Col 2 | Row 6 Col 3 |
