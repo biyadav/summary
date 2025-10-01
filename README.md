@@ -44,16 +44,14 @@ AOP :  what type of proxies and limitations
 |---|---|---|
 | Design pattern , example from JDK Spring| Row 1 Col 2 | Row 1 Col 3 |
 | Threading  custom threadPool  producer consumer using blocking queue ,deadLock  code| Row 2 Col 2 | Row 2 Col 3 |
-| Kafka :  transaction , exactly once delivery , rebalncing cause , protocol  , 
-important config 
-Producer and consumer config . Sample code in Java | Row 3 Col 2 | Row 3 Col 3 |
-| Row 4 Col 1 | Row 4 Col 2 | Row 4 Col 3 |
-| Row 5 Col 1 | Row 5 Col 2 | Row 5 Col 3 |
+| Kafka : Transaction ,exactly once delivery ,rebalncing cause ,protocol , important config Producer and consumer config . Sample code in Java | Row 3 Col 2 | Row 3 Col 3 |
+| Collection classes,use case, limitation, concurrentHashMap, | Row 4 Col 2 | Row 4 Col 3 |
+| Queue, Stack,priority Queue,relatime use | Row 5 Col 2 | Row 5 Col 3 |
 | Row 6 Col 1 | Row 6 Col 2 | Row 6 Col 3 |
 | Row 7 Col 1 | Row 7 Col 2 | Row 7 Col 3 |
 | Row 8 Col 1 | Row 8 Col 2 | Row 8 Col 3 |
 | Row 9 Col 1 | Row 9 Col 2 | Row 9 Col 3 |
-| Row 10 Col 1 | Row 10 Col 2 | Row 10 Col 3 |
+| Kubernetes :  Architecture , yaml for resource ,load balancing  service Mesh  | Row 10 Col 2 | Row 10 Col 3 |
 | Row 11 Col 1 | Row 11 Col 2 | Row 11 Col 3 |
 | Row 12 Col 1 | Row 12 Col 2 | Row 12 Col 3 |
 | Row 13 Col 1 | Row 13 Col 2 | Row 13 Col 3 |
