@@ -1,3 +1,5 @@
+https://www.hellointerview.com/learn/code/prefix-sum/overview
+
 https://medium.com/@priyasrivastava18official/datastructure-topic-wise-part-1-bfs-and-dfs-139ae98d8995  
 
 https://www.designgurus.io/blog/grokking-the-coding-interview-patterns  
