@@ -33,8 +33,32 @@ reasons of rebalncing , how to avoid
 Schema Registry Serialization Avro 
 
 ************ Spring **************************
+
+
+
 AOP :  what type of proxies and limitations
 
 
 
 
+|            ## TOPICS##                                                                                                                                             | Material                   | ##PREP    |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
+| Row 1 Col 1                                                                                                                                                        | Row 1 Col 2                | Row 1 Col 3     |
