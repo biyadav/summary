@@ -24,6 +24,8 @@ https://systemdesignschool.io/primer#main-components
 
 ##  real example 
 
+https://systemdesign.one/url-shortening-system-design/
+
 https://medium.com/@m.romaniiuk/system-design-chat-application-1d6fbf21b372  
 
 https://dev.to/wittedtech-by-harshit/system-design-of-youtube-a-detailed-deep-dive-into-the-video-giant-5019  
