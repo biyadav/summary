@@ -13,3 +13,7 @@ https://amitsinghh.medium.com/28-kubernetes-questions-you-must-know-for-intervie
 https://github.com/asifvora/aws-solutions-architect-associate-notes?tab=readme-ov-file  
 
 https://aws-solutions-architect-associate-notes.vercel.app/#/  
+
+https://www.edureka.co/blog/interview-questions/aws-interview-questions/  
+
+https://medium.com/@austinwolff/my-aws-cloud-practitioner-notes-d3131f4c68a  
